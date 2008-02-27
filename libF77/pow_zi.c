@@ -32,48 +32,40 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include "f77lib.h"
 
-pow_zi(p, a, b) 	/* p = a**b  */
-dcomplex *p, *a;
-long int *b;
+void
+pow_zi(dcomplex *p, dcomplex *a, long int *b) 	/* p = a**b  */
 {
-long int n;
-double t;
-dcomplex x;
+	long int n;
+	double t;
+	dcomplex x;
 
-n = *b;
-p->dreal = 1;
-p->dimag = 0;
+	n = *b;
+	p->dreal = 1;
+	p->dimag = 0;
 
-if(n == 0)
-	return;
-if(n < 0)
-	{
-	n = -n;
-	z_div(&x, a);
-	}
-else
-	{
-	x.dreal = a->dreal;
-	x.dimag = a->dimag;
+	if(n == 0)
+		return;
+	if(n < 0) {
+		n = -n;
+		z_div(&x, p, a);
+	} else {
+		x.dreal = a->dreal;
+		x.dimag = a->dimag;
 	}
 
-for( ; ; )
-	{
-	if(n & 01)
-		{
-		t = p->dreal * x.dreal - p->dimag * x.dimag;
-		p->dimag = p->dreal * x.dimag + p->dimag * x.dreal;
-		p->dreal = t;
+	for( ; ; ) {
+		if(n & 01) {
+			t = p->dreal * x.dreal - p->dimag * x.dimag;
+			p->dimag = p->dreal * x.dimag + p->dimag * x.dreal;
+			p->dreal = t;
 		}
-	if(n >>= 1)
-		{
-		t = x.dreal * x.dreal - x.dimag * x.dimag;
-		x.dimag = 2 * x.dreal * x.dimag;
-		x.dreal = t;
-		}
-	else
-		break;
+		if(n >>= 1) {
+			t = x.dreal * x.dreal - x.dimag * x.dimag;
+			x.dimag = 2 * x.dreal * x.dimag;
+			x.dreal = t;
+		} else
+			break;
 	}
 }
