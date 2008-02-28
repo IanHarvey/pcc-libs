@@ -32,25 +32,24 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include <math.h>
+ 
+#include "f77lib.h"
 
-z_sqrt(r, z)
-dcomplex *r, *z;
+void
+z_sqrt(dcomplex *r, dcomplex *z)
 {
-double mag, sqrt(), cabs();
+	double mag;
 
-if( (mag = cabs(z->dreal, z->dimag)) == 0.)
-	r->dreal = r->dimag = 0.;
-else if(z->dreal > 0)
-	{
-	r->dreal = sqrt(0.5 * (mag + z->dreal) );
-	r->dimag = z->dimag / r->dreal / 2;
-	}
-else
-	{
-	r->dimag = sqrt(0.5 * (mag - z->dreal) );
-	if(z->dimag < 0)
-		z->dimag = - z->dimag;
-	r->dreal = z->dimag / r->dimag / 2;
+	if( (mag = fcabs(z->dreal, z->dimag)) == 0.)
+		r->dreal = r->dimag = 0.;
+	else if(z->dreal > 0) {
+		r->dreal = sqrt(0.5 * (mag + z->dreal) );
+		r->dimag = z->dimag / r->dreal / 2;
+	} else {
+		r->dimag = sqrt(0.5 * (mag - z->dreal) );
+		if(z->dimag < 0)
+			z->dimag = - z->dimag;
+		r->dreal = z->dimag / r->dimag / 2;
 	}
 }

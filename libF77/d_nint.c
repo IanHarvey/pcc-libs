@@ -32,9 +32,11 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_nint(x)
-double *x;
+#include "f77lib.h"
+
+double
+d_nint(double *x)
 {
-return( (*x)>=0 ?
-	(long int) (*x + .5) : (long int) (*x - .5) );
+	return( (*x)>=0 ?
+		(long int) (*x + .5) : (long int) (*x - .5) );
 }

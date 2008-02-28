@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double r_int(x)
-float *x;
+#include "f77lib.h"
+
+double
+r_int(float *x)
 {
-return( (long int) (*x) );
+	return( (long int) (*x) );
 }

@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_acos(x)
-double *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+d_acos(double *x)
 {
-double acos();
-return( acos(*x) );
+	return( acos(*x) );
 }

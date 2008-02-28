@@ -32,37 +32,34 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-float pow_ri(ap, bp)
-float *ap;
-long int *bp;
+#include "f77lib.h"
+
+float
+pow_ri(float *ap, long int *bp)
 {
-double pow, x;
-long int n;
-
-pow = 1;
-x = *ap;
-n = *bp;
-
-if(n != 0)
-	{
-	if(n < 0)
-		{
-		if(x == 0)
-			{
-			return(pow);
+	double pow, x;
+	long int n;
+	
+	pow = 1;
+	x = *ap;
+	n = *bp;
+	
+	if(n != 0) {
+		if(n < 0) {
+			if(x == 0) {
+				return(pow);
 			}
-		n = -n;
-		x = 1/x;
+			n = -n;
+			x = 1/x;
 		}
-	for( ; ; )
-		{
-		if(n & 01)
-			pow *= x;
-		if(n >>= 1)
-			x *= x;
-		else
-			break;
+		for( ; ; ) {
+			if(n & 01)
+				pow *= x;
+			if(n >>= 1)
+				x *= x;
+			else
+				break;
 		}
 	}
-return(pow);
+	return(pow);
 }

@@ -32,13 +32,14 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include <math.h>
+ 
+#include "f77lib.h"
 
-z_sin(r, z)
-dcomplex *r, *z;
+void
+z_sin(dcomplex *r, dcomplex *z)
 {
-double sin(), cos(), sinh(), cosh();
 
-r->dreal = sin(z->dreal) * cosh(z->dimag);
-r->dimag = cos(z->dreal) * sinh(z->dimag);
+	r->dreal = sin(z->dreal) * cosh(z->dimag);
+	r->dimag = cos(z->dreal) * sinh(z->dimag);
 }

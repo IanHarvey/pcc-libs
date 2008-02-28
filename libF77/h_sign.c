@@ -32,10 +32,13 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-short h_sign(a,b)
-short *a, *b;
+#include "f77lib.h"
+
+short
+h_sign(short *a,short *b)
 {
-short x;
-x = (*a >= 0 ? *a : - *a);
-return( *b >= 0 ? x : -x);
+	short x;
+
+	x = (*a >= 0 ? *a : - *a);
+	return( *b >= 0 ? x : -x);
 }

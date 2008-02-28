@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-long int i_dim(a,b)
-long int *a, *b;
+#include "f77lib.h"
+
+long int
+i_dim(long int *a,long int *b)
 {
-return( *a > *b ? *a - *b : 0);
+	return( *a > *b ? *a - *b : 0);
 }

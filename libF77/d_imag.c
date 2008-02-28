@@ -32,10 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include "f77lib.h"
 
-double d_imag(z)
-dcomplex *z;
+double
+d_imag(dcomplex *z)
 {
-return(z->dimag);
+	return(z->dimag);
 }

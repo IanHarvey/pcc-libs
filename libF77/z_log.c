@@ -32,13 +32,14 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include <math.h>
+ 
+#include "f77lib.h"
 
-z_log(r, z)
-dcomplex *r, *z;
+void
+z_log(dcomplex *r, dcomplex *z)
 {
-double log(), cabs(), atan2();
 
-r->dimag = atan2(z->dimag, z->dreal);
-r->dreal = log( cabs( z->dreal, z->dimag ) );
+	r->dimag = atan2(z->dimag, z->dreal);
+	r->dreal = log( fcabs( z->dreal, z->dimag ) );
 }

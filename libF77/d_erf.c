@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double derf_(x)
-double *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+derf_(double *x)
 {
-double erf();
-return( erf(*x) );
+	return( erf(*x) );
 }

@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_dim(a,b)
-double *a, *b;
+#include "f77lib.h"
+
+double
+d_dim(double *a,double *b)
 {
-return( *a > *b ? *a - *b : 0);
+	return( *a > *b ? *a - *b : 0);
 }

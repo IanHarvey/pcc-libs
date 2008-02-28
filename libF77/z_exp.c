@@ -32,15 +32,16 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include <math.h>
+ 
+#include "f77lib.h"
 
-z_exp(r, z)
-dcomplex *r, *z;
+void
+z_exp(dcomplex *r, dcomplex *z)
 {
-double expx;
-double exp(), cos(), sin();
+	double expx;
 
-expx = exp(z->dreal);
-r->dreal = expx * cos(z->dimag);
-r->dimag = expx * sin(z->dimag);
+	expx = exp(z->dreal);
+	r->dreal = expx * cos(z->dimag);
+	r->dimag = expx * sin(z->dimag);
 }

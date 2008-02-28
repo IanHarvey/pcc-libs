@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_atn2(x,y)
-double *x, *y;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+d_atn2(double *x,double *y)
 {
-double atan2();
-return( atan2(*x,*y) );
+	return( atan2(*x,*y) );
 }

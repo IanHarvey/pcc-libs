@@ -41,7 +41,7 @@ pow_zz(dcomplex *r,dcomplex *a,dcomplex *b)
 {
 	double logr, logi, x, y;
 
-	logr = log( hypot(a->dreal, a->dimag) );
+	logr = log( fcabs(a->dreal, a->dimag) );
 	logi = atan2(a->dimag, a->dreal);
 
 	x = exp( logr * b->dreal - logi * b->dimag );

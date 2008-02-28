@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-short h_dim(a,b)
-short *a, *b;
+#include "f77lib.h"
+
+short
+h_dim(short *a,short *b)
 {
-return( *a > *b ? *a - *b : 0);
+	return( *a > *b ? *a - *b : 0);
 }

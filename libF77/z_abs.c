@@ -32,12 +32,13 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include <math.h>
+ 
+#include "f77lib.h"
 
-double z_abs(z)
-dcomplex *z;
+double
+z_abs(dcomplex *z)
 {
-double cabs();
 
-return( cabs( z->dreal, z->dimag ) );
+	return( fcabs( z->dreal, z->dimag ) );
 }

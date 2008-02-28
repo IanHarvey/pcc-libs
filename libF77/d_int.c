@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_int(x)
-double *x;
+#include "f77lib.h"
+
+double
+d_int(double *x)
 {
-return( (long int) (*x) );
+	return( (long int) (*x) );
 }

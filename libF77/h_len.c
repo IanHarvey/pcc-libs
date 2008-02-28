@@ -32,9 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-short h_len(s, n)
-char *s;
-long int n;
+#include "f77lib.h"
+
+short
+h_len(char *s, long int n)
 {
-return(n);
+	return(n);
 }

@@ -32,9 +32,11 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-short h_nint(x)
-float *x;
+#include "f77lib.h"
+
+short
+h_nint(float *x)
 {
-return( (*x)>=0 ?
-	(short) (*x + .5) : (short) (*x - .5) );
+	return( (*x)>=0 ?
+		(short) (*x + .5) : (short) (*x - .5) );
 }

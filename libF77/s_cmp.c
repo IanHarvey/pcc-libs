@@ -32,35 +32,35 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-int s_cmp(a, b, la, lb)	/* compare two strings */
-char *a, *b;
-long int la, lb;
+#include "f77lib.h"
+
+int
+s_cmp(char *a, char *b, long int la, long int lb) /* compare two strings */
 {
-char *aend, *bend;
-aend = a + la;
+	char *aend, *bend;
 
-if(la <= lb)
-	{
-	while(a < aend)
-		if(*a != *b)
-			return( *a - *b );
-		else
-			{ ++a; ++b; }
+	aend = a + la;
 
+	if(la <= lb) {
+		while(a < aend)
+			if(*a != *b)
+				return( *a - *b );
+			else {
+				++a; ++b;
+			}
+
+	} else {
+		bend = b + lb;
+		while(b < bend)
+			if(*a == *b) {
+				++a; ++b;
+			} else
+				return( *a - *b );
+		while(a < aend)
+			if(*a != ' ')
+				return(*a - ' ');
+			else
+				++a;
 	}
-
-else
-	{
-	bend = b + lb;
-	while(b < bend)
-		if(*a == *b)
-			{ ++a; ++b; }
-		else
-			return( *a - *b );
-	while(a < aend)
-		if(*a != ' ')
-			return(*a - ' ');
-		else	++a;
-	}
-return(0);
+	return(0);
 }

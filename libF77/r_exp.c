@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double r_exp(x)
-float *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+r_exp(float *x)
 {
-double exp();
-return( exp(*x) );
+	return( exp(*x) );
 }

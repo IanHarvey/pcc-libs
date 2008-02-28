@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double r_sqrt(x)
-float *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+r_sqrt(float *x)
 {
-double sqrt();
-return( sqrt(*x) );
+	return( sqrt(*x) );
 }

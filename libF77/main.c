@@ -36,50 +36,51 @@
 
 #include <stdio.h>
 #include <signal.h>
+#include <stdlib.h>
+
+static void sigfdie(int), sigidie(int);
+static void sigdie(char *s);
+void MAIN__(void);
+void f_exit(void);
 
 int xargc;
 char **xargv;
 
-main(argc, argv, arge)
-int argc;
-char **argv;
-char **arge;
+int
+main(int argc, char **argv, char **arge)
 {
-int sigfdie(), sigidie();
 
-xargc = argc;
-xargv = argv;
-signal(SIGFPE, sigfdie);	/* ignore underflow, enable overflow */
-signal(SIGIOT, sigidie);
-MAIN__();
-f_exit();
+	xargc = argc;
+	xargv = argv;
+	signal(SIGFPE, sigfdie);	/* ignore underflow, enable overflow */
+	signal(SIGIOT, sigidie);
+	MAIN__();
+	f_exit();
+	return 0;
 }
 
-
-static sigfdie()
+static void
+sigfdie(int a)
 {
-sigdie("Floating Exception");
+	sigdie("Floating Exception");
 }
 
-
-
-static sigidie()
+static void
+sigidie(int a)
 {
-sigdie("IOT Trap");
+	sigdie("IOT Trap");
 }
 
-
-
-static sigdie(s)
-register char *s;
+static void
+sigdie(char *s)
 {
-/* print error message, then clear buffers */
-fflush(stderr);
-fprintf(stderr, "%s\n", s);
-f_exit();
-fflush(stderr);
+	/* print error message, then clear buffers */
+	fflush(stderr);
+	fprintf(stderr, "%s\n", s);
+	f_exit();
+	fflush(stderr);
 
-/* now get a core */
-signal(SIGIOT, 0);
-abort();
+	/* now get a core */
+	signal(SIGIOT, 0);
+	abort();
 }

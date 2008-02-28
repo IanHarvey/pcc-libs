@@ -32,12 +32,13 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#define log10e 0.43429448190325182765
+#include <math.h>
+ 
+#include "f77lib.h"
 
-double r_lg10(x)
-float *x;
+double
+r_lg10(float *x)
 {
-double log();
 
-return( log10e * log(*x) );
+	return( M_LOG10E * log(*x) );
 }

@@ -32,10 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-struct dcomplex { double dreal, dimag; };
+#include <stdlib.h>
 
-z_div(c, a, b)
-struct dcomplex *a, *b, *c;
+#include "f77lib.h"
+
+void
+z_div(dcomplex *c, dcomplex *a, dcomplex *b)
 {
 double ratio, den;
 double abr, abi;

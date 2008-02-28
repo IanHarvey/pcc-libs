@@ -32,26 +32,28 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-short pow_hh(ap, bp)
-short *ap, *bp;
+#include "f77lib.h"
+
+short
+pow_hh(short *ap, short *bp)
 {
-short pow, x, n;
+	short pow, x, n;
 
-pow = 1;
-x = *ap;
-n = *bp;
+	pow = 1;
+	x = *ap;
+	n = *bp;
 
-if(n < 0)
-	{ }
-else if(n > 0)
-	for( ; ; )
-		{
-		if(n & 01)
-			pow *= x;
-		if(n >>= 1)
-			x *= x;
-		else
-			break;
+	if(n < 0) {
+		;
+	} else if(n > 0) {
+		for( ; ; ) {
+			if(n & 01)
+				pow *= x;
+			if(n >>= 1)
+				x *= x;
+			else
+				break;
 		}
-return(pow);
+	}
+	return(pow);
 }

@@ -32,24 +32,24 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-s_copy(a, b, la, lb)	/* assign strings:  a = b */
-char *a, *b;
-long int la, lb;
+#include "f77lib.h"
+
+void
+s_copy(char *a, char *b, long int la, long int lb) /* assign strings:  a = b */
 {
-char *aend, *bend;
+	char *aend, *bend;
 
-aend = a + la;
+	aend = a + la;
 
-if(la <= lb)
-	while(a < aend)
-		*a++ = *b++;
+	if(la <= lb) {
+		while(a < aend)
+			*a++ = *b++;
 
-else
-	{
-	bend = b + lb;
-	while(b < bend)
-		*a++ = *b++;
-	while(a < aend)
-		*a++ = ' ';
+	} else {
+		bend = b + lb;
+		while(b < bend)
+			*a++ = *b++;
+		while(a < aend)
+			*a++ = ' ';
 	}
 }

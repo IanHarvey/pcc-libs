@@ -32,10 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double pow_dd(ap, bp)
-double *ap, *bp;
-{
-double pow();
+#include <math.h>
 
-return(pow(*ap, *bp) );
+#include "f77lib.h"
+
+double
+pow_dd(double *ap, double *bp)
+{
+	return(pow(*ap, *bp) );
 }

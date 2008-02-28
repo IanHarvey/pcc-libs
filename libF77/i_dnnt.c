@@ -32,9 +32,11 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-long int i_dnnt(x)
-double *x;
+#include "f77lib.h"
+
+long int
+i_dnnt(double *x)
 {
-return( (*x)>=0 ?
-	(long int) (*x + .5) : (long int) (*x - .5) );
+	return( (*x)>=0 ?
+		(long int) (*x + .5) : (long int) (*x - .5) );
 }

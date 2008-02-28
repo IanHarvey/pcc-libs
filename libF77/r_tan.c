@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double r_tan(x)
-float *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+r_tan(float *x)
 {
-double tan();
-return( tan(*x) );
+	return( tan(*x) );
 }

@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-short h_mod(a,b)
-short *a, *b;
+#include "f77lib.h"
+
+short
+h_mod(short *a,short *b)
 {
-return( *a % *b);
+	return( *a % *b);
 }

@@ -32,10 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-short h_abs(x)
-short *x;
+#include "f77lib.h"
+
+short
+h_abs(short *x)
 {
-if(*x >= 0)
-	return(*x);
-return(- *x);
+	if(*x >= 0)
+		return(*x);
+	return(- *x);
 }

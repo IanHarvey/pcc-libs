@@ -32,10 +32,13 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double r_sign(a,b)
-float *a, *b;
+#include "f77lib.h"
+
+double
+r_sign(float *a,float *b)
 {
-float x;
-x = (*a >= 0 ? *a : - *a);
-return( *b >= 0 ? x : -x);
+	float x;
+
+	x = (*a >= 0 ? *a : - *a);
+	return( *b >= 0 ? x : -x);
 }

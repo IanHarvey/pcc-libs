@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_prod(x,y)
-float *x, *y;
+#include "f77lib.h"
+
+double
+d_prod(float *x,float *y)
 {
-return( (*x) * (*y) );
+	return( (*x) * (*y) );
 }

@@ -32,11 +32,11 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include "f77lib.h"
 
-d_cnjg(r, z)
-dcomplex *r, *z;
+void
+d_cnjg(dcomplex *r, dcomplex *z)
 {
-r->dreal = z->dreal;
-r->dimag = - z->dimag;
+	r->dreal = z->dreal;
+	r->dimag = - z->dimag;
 }

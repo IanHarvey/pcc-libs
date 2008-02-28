@@ -32,10 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double r_abs(x)
-float *x;
+#include "f77lib.h"
+
+double
+r_abs(float *x)
 {
-if(*x >= 0)
-	return(*x);
-return(- *x);
+	if(*x >= 0)
+		return(*x);
+	return(- *x);
 }

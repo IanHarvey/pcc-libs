@@ -32,19 +32,18 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include "f77lib.h"
 
-pow_ci(p, a, b) 	/* p = a**b  */
-complex *p, *a;
-long int *b;
+void
+pow_ci(complex *p, complex *a, long int *b) 	/* p = a**b  */
 {
-dcomplex p1, a1;
+	dcomplex p1, a1;
 
-a1.dreal = a->real;
-a1.dimag = a->imag;
+	a1.dreal = a->real;
+	a1.dimag = a->imag;
 
-pow_zi(&p1, &a1, b);
+	pow_zi(&p1, &a1, b);
 
-p->real = p1.dreal;
-p->imag = p1.dimag;
+	p->real = p1.dreal;
+	p->imag = p1.dimag;
 }

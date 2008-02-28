@@ -32,9 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-long int l_gt(a,b,la,lb)
-char *a, *b;
-long int la, lb;
+#include "f77lib.h"
+
+long int
+l_gt(char *a,char *b,long int la,long int lb)
 {
-return(s_cmp(a,b,la,lb) > 0);
+	return(s_cmp(a,b,la,lb) > 0);
 }

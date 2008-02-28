@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_mod(x,y)
-double *x, *y;
+#include "f77lib.h"
+
+double
+d_mod(double *x,double *y)
 {
-return(*x - (*y) * ( (long int) (*x / *y)) );
+	return(*x - (*y) * ( (long int) (*x / *y)) );
 }

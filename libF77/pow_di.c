@@ -32,37 +32,34 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double pow_di(ap, bp)
-double *ap;
-long int *bp;
+#include "f77lib.h"
+
+double
+pow_di(double *ap, long int *bp)
 {
-double pow, x;
-long int n;
+	double pow, x;
+	long int n;
 
-pow = 1;
-x = *ap;
-n = *bp;
+	pow = 1;
+	x = *ap;
+	n = *bp;
 
-if(n != 0)
-	{
-	if(n < 0)
-		{
-		if(x == 0)
-			{
-			return(pow);
+	if(n != 0) {
+		if(n < 0) {
+			if(x == 0) {
+				return(pow);
 			}
-		n = -n;
-		x = 1/x;
+			n = -n;
+			x = 1/x;
 		}
-	for( ; ; )
-		{
-		if(n & 01)
-			pow *= x;
-		if(n >>= 1)
-			x *= x;
-		else
-			break;
+		for( ; ; ) {
+			if(n & 01)
+				pow *= x;
+			if(n >>= 1)
+				x *= x;
+			else
+				break;
 		}
 	}
-return(pow);
+	return(pow);
 }

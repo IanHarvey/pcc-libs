@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_log(x)
-double *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+d_log(double *x)
 {
-double log();
-return( log(*x) );
+	return( log(*x) );
 }

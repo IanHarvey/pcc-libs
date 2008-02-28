@@ -32,10 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-long int i_abs(x)
-long int *x;
+#include "f77lib.h"
+
+long int
+i_abs(long int *x)
 {
-if(*x >= 0)
-	return(*x);
-return(- *x);
+	if(*x >= 0)
+		return(*x);
+	return(- *x);
 }

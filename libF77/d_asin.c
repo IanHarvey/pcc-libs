@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_asin(x)
-double *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+d_asin(double *x)
 {
-double asin();
-return( asin(*x) );
+	return( asin(*x) );
 }

@@ -32,8 +32,10 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double r_mod(x,y)
-float *x, *y;
+#include "f77lib.h"
+
+double
+r_mod(float *x,float *y)
 {
-return(*x - (*y) * ( (long int) (*x / *y)) );
+	return(*x - (*y) * ( (long int) (*x / *y)) );
 }

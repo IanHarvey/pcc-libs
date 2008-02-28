@@ -33,10 +33,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include <stdio.h>
+#include <stdlib.h>
 
-abort_()
+#include "f77lib.h"
+
+void
+abort_(void)
 {
-fprintf(stderr, "Fortran abort routine called\n");
-_cleanup();
-abort();
+	fprintf(stderr, "Fortran abort routine called\n");
+	abort();
 }

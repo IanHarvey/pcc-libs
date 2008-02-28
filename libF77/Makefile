@@ -1,6 +1,9 @@
 # compile, then strip unnecessary symbols
+
+CFLAGS=-Wall -Werror -Wstrict-prototypes -Wmissing-prototypes
+
 .c.o :
-	cc -O -c $<
+	cc -O $(CFLAGS) -c $<
 	-ld -r -x $*.o
 	mv a.out $*.o
 
@@ -24,3 +27,7 @@ CHAR =	s_cat.o s_cmp.o s_copy.o
 
 libF77.a : $(MISC) $(POW) $(CX) $(DCX) $(REAL) $(DBL) $(INT) $(HALF) $(CMP) $(CHAR) cabs.o
 	ar r libF77.a $?
+
+clean:
+	rm -f $(MISC) $(POW) $(CX) $(DCX) $(REAL) $(DBL) $(INT) $(HALF) \
+		$(CMP) $(CHAR) cabs.o libF77.a

@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_sin(x)
-double *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+d_sin(double *x)
 {
-double sin();
-return( sin(*x) );
+	return( sin(*x) );
 }

@@ -32,11 +32,11 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "complex"
+#include "f77lib.h"
 
-r_cnjg(r, z)
-complex *r, *z;
+void
+r_cnjg(complex *r, complex *z)
 {
-r->real = z->real;
-r->imag = - z->imag;
+	r->real = z->real;
+	r->imag = - z->imag;
 }

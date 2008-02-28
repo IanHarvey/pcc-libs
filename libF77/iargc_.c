@@ -32,8 +32,11 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-long int iargc_()
+#include "f77lib.h"
+
+long int
+iargc_()
 {
-extern int xargc;
-return ( xargc - 1 );
+	extern int xargc;
+	return ( xargc - 1 );
 }

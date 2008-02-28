@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-double d_cos(x)
-double *x;
+#include <math.h>
+ 
+#include "f77lib.h"
+
+double
+d_cos(double *x)
 {
-double cos();
-return( cos(*x) );
+	return( cos(*x) );
 }

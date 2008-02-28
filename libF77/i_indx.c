@@ -32,25 +32,25 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-long int i_indx(a, b, la, lb)
-char *a, *b;
-long int la, lb;
+#include "f77lib.h"
+
+long int
+i_indx(char *a, char *b, long int la, long int lb)
 {
-long int i, n;
-char *s, *t, *bend;
+	long int i, n;
+	char *s, *t, *bend;
 
-n = la - lb + 1;
-bend = b + lb;
+	n = la - lb + 1;
+	bend = b + lb;
 
-for(i = 0 ; i < n ; ++i)
-	{
-	s = a + i;
-	t = b;
-	while(t < bend)
-		if(*s++ != *t++)
-			goto no;
-	return(i+1);
-	no: ;
+	for(i = 0 ; i < n ; ++i) {
+		s = a + i;
+		t = b;
+		while(t < bend)
+			if(*s++ != *t++)
+				goto no;
+		return(i+1);
+		no: ;
 	}
-return(0);
+	return(0);
 }

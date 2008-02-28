@@ -32,10 +32,13 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-long int i_sign(a,b)
-long int *a, *b;
+#include "f77lib.h"
+
+long int
+i_sign(long int *a,long int *b)
 {
-long int x;
-x = (*a >= 0 ? *a : - *a);
-return( *b >= 0 ? x : -x);
+	long int x;
+
+	x = (*a >= 0 ? *a : - *a);
+	return( *b >= 0 ? x : -x);
 }
