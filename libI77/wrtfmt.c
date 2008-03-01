@@ -32,10 +32,23 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "fio.h"
 #include "fmt.h"
+
+int wrt_I(unint *n,int w,ftnlen len);
+int wrt_IM(unint *n,int w,int m,ftnlen len);
+int wrt_AP(int n);
+int wrt_A(char *p,ftnlen len);
+int wrt_AW(char *p, int w,ftnlen len);
+int wrt_G(ufloat *p,int w,int d,int e,ftnlen len);
+int wrt_H(int a,int b);
+
 extern int cursor;
-mv_cur()
+static int
+mv_cur(void)
 {	/*buggy, could move off front of record*/
 	for(;cursor>0;cursor--) (*putn)(' ');
 	if(cursor<0)
@@ -47,7 +60,9 @@ mv_cur()
 	}
 	return(0);
 }
-w_ed(p,ptr,len) char *ptr; struct syl *p; ftnlen len;
+
+int
+w_ed(struct syl *p, void *ptr, ftnlen len)
 {
 	if(mv_cur()) return(mv_cur());
 	switch(p->op)
@@ -73,7 +88,9 @@ w_ed(p,ptr,len) char *ptr; struct syl *p; ftnlen len;
 	case F:	return(wrt_F(ptr,p->p1,p->p2,len));
 	}
 }
-w_ned(p,ptr) char *ptr; struct syl *p;
+
+int
+w_ned(struct syl *p, char *ptr)
 {
 	switch(p->op)
 	{
@@ -96,7 +113,9 @@ w_ned(p,ptr) char *ptr; struct syl *p;
 		return(wrt_H(p->p1,p->p2));
 	}
 }
-wrt_I(n,w,len) uint *n; ftnlen len;
+
+int
+wrt_I(unint *n,int w,ftnlen len)
 {	int ndigit,sign,spare,i;
 	long x;
 	char *ans;
@@ -116,7 +135,9 @@ wrt_I(n,w,len) uint *n; ftnlen len;
 	}
 	return(0);
 }
-wrt_IM(n,w,m,len) uint *n; ftnlen len;
+
+int
+wrt_IM(unint *n,int w,int m,ftnlen len)
 {	int ndigit,sign,spare,i,xsign;
 	long x;
 	char *ans;
@@ -145,7 +166,9 @@ wrt_IM(n,w,m,len) uint *n; ftnlen len;
 	for(i=0;i<ndigit;i++) (*putn)(*ans++);
 	return(0);
 }
-wrt_AP(n)
+
+int
+wrt_AP(int n)
 {	char *s,quote;
 	if(mv_cur()) return(mv_cur());
 	s=(char *)n;
@@ -157,13 +180,17 @@ wrt_AP(n)
 	}
 	return(1);
 }
-wrt_H(a,b)
+
+int
+wrt_H(int a,int b)
 {	char *s=(char *)b;
 	if(mv_cur()) return(mv_cur());
 	while(a--) (*putn)(*s++);
 	return(1);
 }
-wrt_L(n,len) ftnint *n;
+
+int
+wrt_L(ftnint *n, int len)
 {	int i;
 	for(i=0;i<len-1;i++)
 		(*putn)(' ');
@@ -171,12 +198,16 @@ wrt_L(n,len) ftnint *n;
 	else (*putn)('f');
 	return(0);
 }
-wrt_A(p,len) char *p; ftnlen len;
+
+int
+wrt_A(char *p,ftnlen len)
 {
 	while(len-- > 0) (*putn)(*p++);
 	return(0);
 }
-wrt_AW(p,w,len) char * p; ftnlen len;
+
+int
+wrt_AW(char *p, int w,ftnlen len)
 {
 	while(w>len)
 	{	w--;
@@ -186,12 +217,39 @@ wrt_AW(p,w,len) char * p; ftnlen len;
 		(*putn)(*p++);
 	return(0);
 }
-wrt_E(p,w,d,e,len) ufloat *p; ftnlen len;
+
+#define MXSTR 80
+char nr[MXSTR];
+
+/*
+ * Trivial ecvt implementation.
+ */
+static char *
+Xecvt(double value, int ndigit, int *decpt, int *sign)
+{
+	char fmt[10];
+	char *w = nr;
+
+	if (ndigit > 70)
+		ndigit = 70;
+
+	snprintf(fmt, 10, "%%# .%de", ndigit-1);
+	snprintf(nr, MXSTR, fmt, value);
+	*sign = (*w == '-' ? 1 : 0);
+	w[2] = w[1];
+	*decpt = atoi(&nr[ndigit+3]) + 1;
+	nr[ndigit+2] = 0;
+	return &nr[2];
+}
+
+
+int
+wrt_E(ufloat *p,int w,int d,int e, ftnlen len)
 {	char *s;
 	int dp,sign,i,delta;
-	char *ecvt();
+
 	if(scale>0) d++;
-	s=ecvt( (len==sizeof(float)?p->pf:p->pd) ,d,&dp,&sign);
+	s=Xecvt( (len==sizeof(float)?p->pf:p->pd) ,d,&dp,&sign);
 	if(sign || cplus) delta=6;
 	else delta=5;
 	if(w<delta+d)
@@ -236,7 +294,9 @@ wrt_E(p,w,d,e,len) ufloat *p; ftnlen len;
 	(*putn)(dp%10+'0');
 	return(0);
 }
-wrt_G(p,w,d,e,len) ufloat *p; ftnlen len;
+
+int
+wrt_G(ufloat *p,int w,int d,int e,ftnlen len)
 {	double up = 1,x;
 	int i,oldscale=scale,n,j;
 	x= len==sizeof(float)?p->pf:p->pd;
@@ -254,17 +314,50 @@ wrt_G(p,w,d,e,len) ufloat *p; ftnlen len;
 	}
 	return(wrt_E(p,w,d,e,len));
 }
-wrt_F(p,w,d,len) ufloat *p; ftnlen len;
+
+/*
+ * Simple fcvt() implementation.
+ */
+static char *
+Xfcvt(double value, int ndigit, int *decpt, int *sign)
+{
+	char fmt[10];
+	char *w = nr;
+
+	if (ndigit > 70)
+		ndigit = 70;
+
+	snprintf(fmt, 10, "%%# .%df", ndigit);
+	snprintf(nr, MXSTR, fmt, value);
+	*sign = (*w == '-' ? 1 : 0);
+	if (w[1] == '0') {
+		*decpt = 0;
+		w+= 3;
+	} else {
+		for (w+= 1; *w && *w != '.'; w++)
+			;
+		*decpt = w - nr - 1;
+		while (*w)
+			*w = w[1], w++;
+		w = &nr[1];
+	}
+	return w;
+}
+
+
+int
+wrt_F(ufloat *p, int w,int d, ftnlen len)
 {	int i,delta,dp,sign,n;
 	double x;
-	char *s,*fcvt();
+	char *s;
+
 	x= (len==sizeof(float)?p->pf:p->pd);
 	if(scale)
 	{	if(scale>0)
 			for(i=0;i<scale;i++) x*=10;
 		else	for(i=0;i<-scale;i++) x/=10;
 	}
-	s=fcvt(x,d,&dp,&sign);
+	s=Xfcvt(x,d,&dp,&sign);
 	if(-dp>=d) sign=0;
 	if(sign || cplus) delta=2;
 	else delta=1;
