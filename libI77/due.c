@@ -33,23 +33,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include "fio.h"
-s_rdue(a) cilist *a;
+
+int
+s_rdue(cilist *a)
 {
 	int n;
-	if(n=c_due(a,READ)) return(n);
+	if((n=c_due(a,READ))) return(n);
 	reading=1;
 	if(curunit->uwrt) nowreading(curunit);
 	return(0);
 }
-s_wdue(a) cilist *a;
+
+int
+s_wdue(cilist *a)
 {
 	int n;
-	if(n=c_due(a,WRITE)) return(n);
+	if((n=c_due(a,WRITE))) return(n);
 	reading=0;
 	if(!curunit->uwrt) nowwriting(curunit);
 	return(0);
 }
-c_due(a,flag) cilist *a;
+
+int
+c_due(cilist *a, int flag)
 {
 	if(!init) f_init();
 	if(a->ciunit>=MXUNIT || a->ciunit<0)
@@ -67,6 +73,8 @@ c_due(a,flag) cilist *a;
 	curunit->uend = 0;
 	return(0);
 }
+
+int
 e_rdue()
 {
 	if(curunit->url==1 || recpos==curunit->url)
@@ -76,6 +84,8 @@ e_rdue()
 		err(elist->cierr,200,"syserr");
 	return(0);
 }
+
+int
 e_wdue()
 {
 	return(e_rdue());

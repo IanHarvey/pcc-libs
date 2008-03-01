@@ -35,28 +35,48 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/dir.h>
+
+#include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 #include "fio.h"
+
+static void dcat(char *a,char *b);
+
 #define DIRSIZE	14
-g_char(a,alen,b) char *a,*b; ftnlen alen;
-{	char *x=a+alen-1,*y=b+alen-1;
+
+void
+g_char(char *a, ftnlen alen, char *b)
+{
+	char *x=a+alen-1,*y=b+alen-1;
 	*(y+1)=0;
 	for(;x>=a && *x==' ';x--) *y--=0;
 	for(;x>=a;*y--= *x--);
 }
-b_char(a,b,blen) char *a,*b; ftnlen blen;
-{	int i;
+
+void
+b_char(char *a, char *b, ftnlen blen)
+{
+	int i;
 	for(i=0;i<blen && *a!=0;i++) *b++= *a++;
 	for(;i<blen;i++) *b++=' ';
 }
-inode(a) char *a;
-{	struct stat x;
+
+int
+inode(char *a)
+{
+	struct stat x;
 	if(stat(a,&x)<0) return(-1);
 	return(x.st_ino);
 }
 #define DONE {*bufpos++=0; close(file); return;}
-#define INTBOUND sizeof(int)-1
+#define INTBOUND (sizeof(int)-1)
 #define register 
-mvgbt(n,len,a,b) char *a,*b;
+
+static void
+mvgbt(int n,int len,char *a,char *b)
 {	register int num=n*len;
 	if( ((int)a&INTBOUND)==0 && ((int)b&INTBOUND)==0 && (num&INTBOUND)==0 )
 	{	register int *x=(int *)a,*y=(int *)b;
@@ -70,7 +90,8 @@ mvgbt(n,len,a,b) char *a,*b;
 		else for(num--;num>=0;num--) *(y+num)= *(x+num);
 	}
 }
-char *curdir()
+static char *
+curdir(void)
 {	char name[256],*bufpos = name;
 	struct stat x;
 	struct direct y;
@@ -105,7 +126,9 @@ done:
 	close(file);
 	return(bufpos);
 }
-dcat(a,b) char *a,*b;
+
+void
+dcat(char *a,char *b)
 {
 	int i,j;
 	i=strlen(b);
@@ -114,7 +137,9 @@ dcat(a,b) char *a,*b;
 	mvgbt(1,i,b,a);
 	a[i]='/';
 }
-fullpath(a,b,errflag) char *a,*b;
+
+int
+fullpath(char *a,char *b, int errflag)
 {
 	char *a1,*a2,*npart,*dpart,*p;
 	a1=curdir();

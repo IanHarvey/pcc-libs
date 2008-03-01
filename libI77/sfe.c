@@ -35,14 +35,20 @@
 /* sequential formatted external common routines*/
 #include "fio.h"
 extern char *fmtbuf;
+
+int
 e_rsfe()
 {	int n;
 	n=en_fio();
 	fmtbuf=NULL;
 	return(n);
 }
-c_sfe(a,flag) cilist *a; /* check */
-{	unit *p;
+
+int
+c_sfe(cilist *a, int flag) /* check */
+{
+	unit *p;
+
 	if(a->ciunit >= MXUNIT || a->ciunit<0)
 		err(a->cierr,101,"startio");
 	p = &units[a->ciunit];
@@ -50,6 +56,8 @@ c_sfe(a,flag) cilist *a; /* check */
 	if(!p->ufmt) err(a->cierr,102,"sfe")
 	return(0);
 }
+
+int
 e_wsfe()
 {	return(e_rsfe());
 }

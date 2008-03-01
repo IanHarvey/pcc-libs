@@ -72,4 +72,6 @@ typedef union
 	double	fldouble;
 } flex;
 extern int scale;
-extern int (*lioproc)();
+extern int (*lioproc)(ftnint *number,flex *ptr,ftnlen len,ftnint type);
+int do_lio(ftnint *type,ftnint *number,flex *ptr,ftnlen len);
+

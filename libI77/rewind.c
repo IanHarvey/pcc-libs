@@ -33,7 +33,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include "fio.h"
-f_rew(a) alist *a;
+
+int
+f_rew(alist *a)
 {
 	unit *b;
 	if(a->aunit>=MXUNIT || a->aunit<0) err(a->aerr,101,"rewind");

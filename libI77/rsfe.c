@@ -35,12 +35,14 @@
 /* read sequential formatted external */
 #include "fio.h"
 #include "fmt.h"
-extern int x_getc(),rd_ed(),rd_ned();
-extern int x_endp(),x_rev(),xrd_SL();
-s_rsfe(a) cilist *a; /* start */
+static int x_getc(void), x_endp(void), x_rev(void);
+static int xrd_SL(void);
+
+int
+s_rsfe(cilist *a) /* start */
 {	int n;
 	if(!init) f_init();
-	if(n=c_sfe(a,READ)) return(n);
+	if((n=c_sfe(a,READ))) return(n);
 	reading=1;
 	sequential=1;
 	formatted=1;
@@ -64,6 +66,8 @@ s_rsfe(a) cilist *a; /* start */
 	if(curunit->uwrt) nowreading(curunit);
 	return(0);
 }
+
+int
 xrd_SL()
 {	int ch;
 	if(!curunit->uend)
@@ -71,6 +75,8 @@ xrd_SL()
 	cursor=recpos=0;
 	return(1);
 }
+
+int
 x_getc()
 {	int ch;
 	if(curunit->uend) return(EOF);
@@ -89,11 +95,15 @@ x_getc()
 	}
 	return(-1);
 }
+
+int
 x_endp()
 {
 	xrd_SL();
 	return(0);
 }
+
+int
 x_rev()
 {
 	xrd_SL();

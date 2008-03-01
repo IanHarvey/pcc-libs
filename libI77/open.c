@@ -32,10 +32,22 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include	"sys/types.h"
-#include	"sys/stat.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 #include "fio.h"
-f_open(a) olist *a;
+
+static int isdev(char *s);
+int canseek(FILE *f);
+
+
+int
+f_open(olist *a)
 {	unit *b;
 	int n;
 	char buf[256];
@@ -116,10 +128,13 @@ connected:
 	if((n=f_clos(&x))!=0) return(n);
 	goto unconnected;
 }
-fk_open(rd,seq,fmt,n) ftnint n;
-{	char nbuf[10];
+
+int
+fk_open(int rd,int seq,int fmt, ftnint n)
+{
+	char nbuf[10];
 	olist a;
-	sprintf(nbuf,"fort.%D",n);
+	sprintf(nbuf,"fort.%ld",n);
 	a.oerr=1;
 	a.ounit=n;
 	a.ofnm=nbuf;
@@ -131,7 +146,9 @@ fk_open(rd,seq,fmt,n) ftnint n;
 	a.oblnk=NULL;
 	return(f_open(&a));
 }
-isdev(s) char *s;
+
+int
+isdev(char *s)
 {	struct stat x;
 	int j;
 	if(stat(s, &x) == -1) return(0);

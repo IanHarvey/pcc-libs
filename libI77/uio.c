@@ -34,7 +34,11 @@
  */
 #include "fio.h"
 int reclen;
-do_us(number,ptr,len) ftnint *number; ftnlen len; char *ptr;
+
+static int do_ud(ftnint *number, char *ptr, ftnlen len);
+
+static int
+do_us(ftnint *number, char *ptr, ftnlen len)
 {
 	if(reading)
 	{
@@ -53,13 +57,17 @@ do_us(number,ptr,len) ftnint *number; ftnlen len; char *ptr;
 		return(0);
 	}
 }
-do_uio(number,ptr,len) ftnint *number; ftnlen len; char *ptr;
+
+int
+do_uio(ftnint *number, char *ptr, ftnlen len)
 {
 	if(sequential)
 		return(do_us(number,ptr,len));
 	else	return(do_ud(number,ptr,len));
 }
-do_ud(number,ptr,len) ftnint *number; ftnlen len; char *ptr;
+
+int
+do_ud(ftnint *number, char *ptr, ftnlen len)
 {
 	recpos += *number * len;
 	if(recpos > curunit->url && curunit->url!=1)

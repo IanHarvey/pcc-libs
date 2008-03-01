@@ -32,9 +32,17 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <sys/wait.h>
+
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 #include "fio.h"
 static alist *ax;
-f_end(a) alist *a;
+
+int
+f_end(alist *a)
 {
 	unit *b;
 	if(a->aunit>=MXUNIT || a->aunit<0) err(a->aerr,101,"endfile");
@@ -46,7 +54,9 @@ f_end(a) alist *a;
 	if(b->uwrt) nowreading(b);
 	return(t_runc(b));
 }
-t_runc(b) unit *b;
+
+int
+t_runc(unit *b)
 {
 	char buf[128],nm[16];
 	FILE *tmp;
@@ -75,8 +85,8 @@ t_runc(b) unit *b;
 		if((m=fork())==-1) continue;
 		else if(m==0)
 		{
-			execl("/bin/cp","cp",nm,b->ufnm,0);
-			execl("/usr/bin/cp","cp",nm,b->ufnm,0);
+			execl("/bin/cp","cp",nm,b->ufnm,NULL);
+			execl("/usr/bin/cp","cp",nm,b->ufnm,NULL);
 			fprintf(stdout,"no cp\n");
 			exit(1);
 		}

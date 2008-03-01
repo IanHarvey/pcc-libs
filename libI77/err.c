@@ -34,8 +34,13 @@
  */
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 #include "fio.h"
+
 #define STR(x) (x==NULL?"":x)
 
 /*global definitions*/
@@ -46,18 +51,20 @@ flag reading;	/*1 if reading, 0 if writing*/
 flag cplus,cblank;
 char *fmtbuf;
 flag external;	/*1 if external io, 0 if internal */
-int (*doed)(),(*doned)();
-int (*doend)(),(*donewrec)(),(*dorevert)();
+int (*doed)(struct syl *p, void *ptr, ftnlen len);
+int (*doend)(void),(*donewrec)(void),(*dorevert)(void);
 flag sequential;	/*1 if sequential io, 0 if direct*/
 flag formatted;	/*1 if formatted io, 0 if unformatted*/
-int (*getn)(),(*putn)();	/*for formatted io*/
+int (*getn)(void),(*putn)(int);	/*for formatted io*/
 FILE *cf;	/*current file*/
 unit *curunit;	/*current unit*/
 int recpos;	/*place in current record*/
 int cursor,scale;
 
+int canseek(FILE *f);
+
 /*error messages*/
-char *F_err[]
+char *F_err[] =
 {
 	"error in format",
 	"illegal unit number",
@@ -78,7 +85,9 @@ char *F_err[]
 	"blank logical input field",
 };
 #define MAXERR (sizeof(F_err)/sizeof(char *)+100)
-fatal(n,s) char *s;
+
+void
+fatal(int n, char *s)
 {
 	if(n<100 && n>=0) perror(s); /*SYSDEP*/
 	else if(n>=(int)MAXERR)
@@ -93,10 +102,11 @@ fatal(n,s) char *s;
 	fprintf(stderr,"lately %s %s %s %s IO\n",reading?"reading":"writing",
 		sequential?"sequential":"direct",formatted?"formatted":"unformatted",
 		external?"external":"internal");
-	_cleanup();
 	abort();
 }
+
 /*initialization routine*/
+void
 f_init()
 {	unit *p;
 	init=1;
@@ -116,7 +126,9 @@ f_init()
 	p->ufmt=1;
 	p->uwrt=1;
 }
-canseek(f) FILE *f; /*SYSDEP*/
+
+int
+canseek(FILE *f) /*SYSDEP*/
 {	struct stat x;
 	fstat(fileno(f),&x);
 	if(x.st_nlink > 0 /*pipe*/ && !isatty(fileno(f)))
@@ -125,19 +137,23 @@ canseek(f) FILE *f; /*SYSDEP*/
 	}
 	return(0);
 }
-nowreading(x) unit *x;
+
+int
+nowreading(unit *x)
 {
 	long loc;
 	x->uwrt=0;
 	loc=ftell(x->ufd);
 	freopen(x->ufnm,"r",x->ufd);
-	fseek(x->ufd,loc,0);
+	return fseek(x->ufd,loc,0);
 }
+
+int
 nowwriting(x) unit *x;
 {
 	long loc;
 	loc=ftell(x->ufd);
 	x->uwrt=1;
 	freopen(x->ufnm,"a",x->ufd);
-	fseek(x->ufd,loc,0);
+	return fseek(x->ufd,loc,0);
 }

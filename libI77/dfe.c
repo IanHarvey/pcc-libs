@@ -34,14 +34,15 @@
  */
 #include "fio.h"
 #include "fmt.h"
-extern int rd_ed(),rd_ned(),y_getc(),y_putc(),y_err();
-extern int y_rev();
-extern int w_ed(),w_ned();
-s_rdfe(a) cilist *a;
+static int y_getc(void), y_putc(int), y_rev(void), y_err(void);
+static int c_dfe(cilist *a, int flag);
+
+int
+s_rdfe(cilist *a)
 {
 	int n;
 	if(!init) f_init();
-	if(n=c_dfe(a,READ))return(n);
+	if((n=c_dfe(a,READ)))return(n);
 	reading=1;
 	if(curunit->uwrt) nowreading(curunit);
 	getn = y_getc;
@@ -54,11 +55,13 @@ s_rdfe(a) cilist *a;
 	fmt_bg();
 	return(0);
 }
-s_wdfe(a) cilist *a;
+
+int
+s_wdfe(cilist *a)
 {
 	int n;
 	if(!init) f_init();
-	if(n=c_dfe(a,WRITE)) return(n);
+	if((n=c_dfe(a,WRITE))) return(n);
 	reading=0;
 	if(!curunit->uwrt) nowwriting(curunit);
 	putn = y_putc;
@@ -71,17 +74,23 @@ s_wdfe(a) cilist *a;
 	fmt_bg();
 	return(0);
 }
+
+int
 e_rdfe()
 {
 	en_fio();
 	return(0);
 }
+
+int
 e_wdfe()
 {
 	en_fio();
 	return(0);
 }
-c_dfe(a,flag) cilist *a;
+
+int
+c_dfe(cilist *a, int flag)
 {
 	sequential=0;
 	formatted=external=1;
@@ -100,6 +109,8 @@ c_dfe(a,flag) cilist *a;
 	curunit->uend = 0;
 	return(0);
 }
+
+int
 y_getc()
 {
 	int ch;
@@ -120,7 +131,9 @@ y_getc()
 	}
 	err(elist->cierr,errno,"readingd");
 }
-y_putc(c)
+
+int
+y_putc(int c)
 {
 	recpos++;
 	if(recpos <= curunit->url || curunit->url==1)
@@ -129,6 +142,8 @@ y_putc(c)
 		err(elist->cierr,110,"dout");
 	return(0);
 }
+
+int
 y_rev()
 {	/*what about work done?*/
 	if(curunit->url==1 || recpos==curunit->url)
@@ -138,7 +153,10 @@ y_rev()
 	recpos=0;
 	return(0);
 }
+
+int
 y_err()
 {
 	err(elist->cierr, 110, "dfe");
+	return 0; /* XXX */
 }

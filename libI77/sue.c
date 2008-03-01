@@ -35,11 +35,15 @@
 #include "fio.h"
 extern int reclen;
 long recloc;
-s_rsue(a) cilist *a;
+
+static int c_sue(cilist *a, int flag);
+
+int
+s_rsue(cilist *a)
 {
 	int n;
 	if(!init) f_init();
-	if(n=c_sue(a,READ)) return(n);
+	if((n=c_sue(a,READ))) return(n);
 	reading=1;
 	recpos=0;
 	if(curunit->uwrt) nowreading(curunit);
@@ -54,11 +58,13 @@ s_rsue(a) cilist *a;
 	}
 	return(0);
 }
-s_wsue(a) cilist *a;
+
+int
+s_wsue(cilist *a)
 {
 	int n;
 	if(!init) f_init();
-	if(n=c_sue(a,WRITE)) return(n);
+	if((n=c_sue(a,WRITE))) return(n);
 	reading=0;
 	reclen=0;
 	if(!curunit->uwrt) nowwriting(curunit);
@@ -66,7 +72,9 @@ s_wsue(a) cilist *a;
 	fseek(cf,(long)sizeof(int),1);
 	return(0);
 }
-c_sue(a,flag) cilist *a;
+
+int
+c_sue(cilist *a, int flag)
 {
 	if(a->ciunit >= MXUNIT || a->ciunit < 0)
 		err(a->cierr,101,"startio");
@@ -81,6 +89,8 @@ c_sue(a,flag) cilist *a;
 	if(!curunit->useek) err(a->cierr,103,"sue")
 	return(0);
 }
+
+int
 e_wsue()
 {	long loc;
 	fwrite(&reclen,sizeof(int),1,cf);
@@ -90,6 +100,8 @@ e_wsue()
 	fseek(cf,loc,0);
 	return(0);
 }
+
+int
 e_rsue()
 {
 	fseek(cf,(long)(reclen-recpos+sizeof(int)),1);

@@ -68,10 +68,10 @@ struct syl
 #define AW 31
 extern struct syl syl[];
 extern int pc,parenlvl,revloc;
-extern int (*doed)(),(*doned)();
-extern int (*dorevert)(),(*donewrec)(),(*doend)();
+extern int (*doed)(struct syl *p, void *ptr, ftnlen len),
+	(*doned)(struct syl *p, char *ptr);
+extern int (*dorevert)(void),(*donewrec)(void),(*doend)(void);
 extern flag cblank,cplus,workdone;
-extern int dummy();
 extern char *fmtbuf;
 extern int scale;
 typedef union
@@ -82,8 +82,13 @@ typedef union
 {	short is;
 	char ic;
 	long il;
-} uint;
+} unint;
 #define GET(x) if((x=(*getn)())<0) return(x)
 #define VAL(x) (x!='\n'?x:' ')
 #define PUT(x) (*putn)(x)
 extern int cursor;
+
+/* prototypes */
+int wrt_E(ufloat *, int, int, int, ftnlen);
+int wrt_F(ufloat *p, int w,int d, ftnlen len);
+

@@ -33,11 +33,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 #include "fio.h"
-f_back(a) alist *a;
-{	unit *b;
+
+int
+f_back(alist *a)
+{
+	unit *b;
 	int n,i;
 	long x;
 	char buf[32];
+
 	if(a->aunit >= MXUNIT || a->aunit < 0)
 		err(a->aerr,101,"backspace")
 	b= &units[a->aunit];

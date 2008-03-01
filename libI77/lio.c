@@ -32,15 +32,26 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <string.h>
+
 #include "fio.h"
+#include "fmt.h"
 #include "lio.h"
-extern int l_write();
-int t_putc();
-s_wsle(a) cilist *a;
+
+static int l_write(ftnint *number, flex *ptr,ftnlen len, ftnint type);
+static int t_putc(int);
+void lwrt_I(ftnint n);
+void lwrt_L(ftnint n);
+void lwrt_A(char *p, ftnlen len);
+void lwrt_F(double n);
+void lwrt_C(double a,double b);
+
+int
+s_wsle(cilist *a)
 {
 	int n;
 	if(!init) f_init();
-	if(n=c_le(a,WRITE)) return(n);
+	if((n=c_le(a,WRITE))) return(n);
 	reading=0;
 	external=1;
 	formatted=1;
@@ -50,18 +61,25 @@ s_wsle(a) cilist *a;
 		return(nowwriting(curunit));
 	else	return(0);
 }
+
+int
 e_wsle()
 {
 	t_putc('\n');
 	recpos=0;
 	return(0);
 }
+
+int
 t_putc(c)
 {
 	recpos++;
 	putc(c,cf);
+	return 0;
 }
-lwrt_I(n) ftnint n;
+
+void
+lwrt_I(ftnint n)
 {
 	char buf[LINTW],*p;
 	sprintf(buf," %ld",(long)n);
@@ -71,7 +89,9 @@ lwrt_I(n) ftnint n;
 	}
 	for(p=buf;*p;t_putc(*p++));
 }
-lwrt_L(n) ftnint n;
+
+void
+lwrt_L(ftnint n)
 {
 	if(recpos+LLOGW>=LINE)
 	{	t_putc('\n');
@@ -79,7 +99,9 @@ lwrt_L(n) ftnint n;
 	}
 	wrt_L(&n,LLOGW);
 }
-lwrt_A(p,len) char *p; ftnlen len;
+
+void
+lwrt_A(char *p, ftnlen len)
 {
 	int i;
 	if(recpos+len>=LINE)
@@ -90,8 +112,13 @@ lwrt_A(p,len) char *p; ftnlen len;
 	t_putc(' ');
 	for(i=0;i<len;i++) t_putc(*p++);
 }
-lwrt_F(n) double n;
+
+void
+lwrt_F(double n)
 {
+	ufloat uf;
+
+	uf.pd = n;
 	if(LLOW<=n && n<LHIGH)
 	{
 		if(recpos+LFW>=LINE)
@@ -100,7 +127,7 @@ lwrt_F(n) double n;
 			recpos=0;
 		}
 		scale=0;
-		wrt_F(&n,LFW,LFD,(ftnlen)sizeof(n));
+		wrt_F(&uf,LFW,LFD,(ftnlen)sizeof(uf));
 	}
 	else
 	{
@@ -108,10 +135,12 @@ lwrt_F(n) double n;
 		{	t_putc('\n');
 			recpos=0;
 		}
-		wrt_E(&n,LEW,LED,LEE,(ftnlen)sizeof(n));
+		wrt_E(&uf,LEW,LED,LEE,(ftnlen)sizeof(uf));
 	}
 }
-lwrt_C(a,b) double a,b;
+
+void
+lwrt_C(double a,double b)
 {
 	if(recpos+2*LFW+3>=LINE)
 	{	t_putc('\n');
@@ -123,7 +152,9 @@ lwrt_C(a,b) double a,b;
 	lwrt_F(b);
 	t_putc(')');
 }
-l_write(number,ptr,len,type) ftnint *number,type; flex *ptr; ftnlen len;
+
+int
+l_write(ftnint *number, flex *ptr,ftnlen len, ftnint type)
 {
 	int i;
 	ftnint x;
@@ -159,7 +190,7 @@ l_write(number,ptr,len,type) ftnint *number,type; flex *ptr; ftnlen len;
 		case TYCHAR: lwrt_A((char *)ptr,len);
 			break;
 		}
-		ptr = (char *)ptr + len;
+		ptr = (flex *)((char *)ptr + len); /* XXX ??? */
 	}
 	return(0);
 }

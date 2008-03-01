@@ -35,12 +35,15 @@
 /*write sequential formatted external*/
 #include "fio.h"
 #include "fmt.h"
-extern int x_putc(),w_ed(),w_ned();
-extern int xw_end(),xw_rev(),x_wSL();
-s_wsfe(a) cilist *a;	/*start*/
+static int x_putc(int);
+static int xw_end(void),xw_rev(void),x_wSL(void);
+
+
+int
+s_wsfe(cilist *a)
 {	int n;
 	if(!init) f_init();
-	if(n=c_sfe(a,WRITE)) return(n);
+	if((n=c_sfe(a,WRITE))) return(n);
 	reading=0;
 	sequential=1;
 	formatted=1;
@@ -64,11 +67,16 @@ s_wsfe(a) cilist *a;	/*start*/
 	if(!curunit->uwrt) nowwriting(curunit);
 	return(0);
 }
+
+int
 x_putc(c)
 {
 	recpos++;
 	putc(c,cf);
+	return 0;
 }
+
+void
 pr_put(c)
 {	static flag new = 1;
 	recpos++;
@@ -83,17 +91,23 @@ pr_put(c)
 	}
 	else putc(c,cf);
 }
+
+int
 x_wSL()
 {
 	recpos=0;
 	(*putn)('\n');
 	return(1);
 }
+
+int
 xw_end()
 {
 	(*putn)('\n');
 	return(0);
 }
+
+int
 xw_rev()
 {
 	if(workdone) (*putn)('\n');

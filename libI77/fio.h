@@ -123,7 +123,7 @@ extern int errno;
 extern flag init;
 extern cilist *elist;	/*active external io list*/
 extern flag reading,external,sequential,formatted;
-extern int (*getn)(),(*putn)();	/*for formatted io*/
+extern int (*getn)(void),(*putn)(int);	/*for formatted io*/
 extern FILE *cf;	/*current file*/
 extern unit *curunit;	/*current unit*/
 extern unit units[];
@@ -142,3 +142,72 @@ extern int recpos;	/*position in current record*/
 #define UNF	6
 #define EXT	7
 #define INT	8
+
+/* forward decl's */
+struct syl;
+
+/* function prototypes */
+void fatal(int n, char *s);
+int t_runc(unit *b);
+int nowreading(unit *x);
+int f_back(alist *a);
+int rd_ed(struct syl *p, void *ptr, ftnlen len);
+int rd_ned(struct syl *p, char *ptr);
+int w_ed(struct syl *p, void *ptr, ftnlen len);
+int w_ned(struct syl *p, char *ptr);
+int s_rdfe(cilist *a);
+void f_init(void);
+int pars_f(char *);
+void fmt_bg(void);
+int s_wdfe(cilist *a);
+int e_rdfe(void);
+int e_wdfe(void);
+int nowwriting(unit *);
+int en_fio(void);
+int do_fio(ftnint *number, char *ptr, ftnlen len);
+int fk_open(int rd,int seq,int fmt, ftnint n);
+int s_rdue(cilist *a);
+int s_wdue(cilist *a);
+int c_due(cilist *a, int flag);
+int e_rdue(void);
+int e_wdue(void);
+int z_getc(void);
+int z_putc(int);
+int s_rsfi(icilist *a);
+int s_wsfi(icilist *a);
+int e_rsfi(void);
+int e_wsfi(void);
+int f_inqu(inlist *a);
+void g_char(char *a, ftnlen alen, char *b);
+void b_char(char *a, char *b, ftnlen blen);
+int inode(char *a);
+void setcilist(cilist *x, int u, char *fmt,int rec,int xerr,int end);
+void setolist(olist *, int, char *, char *, char *, int, char *, int);
+void stcllist(cllist *x, int xunit, char *stat, int cerr);
+void setalist(alist *x, int xunit, int aerr);
+int f_rew(alist *a);
+int s_rsfe(cilist *a);
+int c_sfe(cilist *a, int flag);
+int s_rsue(cilist *a);
+int s_wsue(cilist *a);
+int e_rsue(void);
+int e_wsue(void);
+int do_uio(ftnint *number, char *ptr, ftnlen len);
+int s_wsfe(cilist *a);
+void pr_put(int);
+int e_rsfe(void);
+int e_wsfe(void);
+int c_le(cilist *a, int flag);
+int e_wsle(void);
+int s_wsle(cilist *a);
+int wrt_L(ftnint *n, int len);
+int s_rsle(cilist *a);
+int e_rsle(void);
+int f_open(olist *a);
+int f_clos(cllist *a);
+void f_exit(void);
+void flush_(void);
+int fullpath(char *a,char *b, int errflag);
+int f_end(alist *);
+char *icvt(long value,int *ndigit,int *sign);
+

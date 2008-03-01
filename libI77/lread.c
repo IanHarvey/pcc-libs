@@ -32,12 +32,23 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <stdlib.h>
+
 #include "fio.h"
 #include "fmt.h"
 #include "lio.h"
 #include "ctype.h"
+
 extern char *fmtbuf;
-int (*lioproc)();
+int (*lioproc)(ftnint *number,flex *ptr,ftnlen len,ftnint type);
+
+static int rd_int(double *x);
+int l_R(void);
+int l_C(void);
+int l_L(void);
+int l_CHAR(void);
+int t_getc(void);
+int t_sep(void);
 
 #define isblnk(x) (ltab[x+1]&B)
 #define issep(x) (ltab[x+1]&SX)
@@ -47,7 +58,7 @@ int (*lioproc)();
 #define B 2
 #define AX 4
 #define EX 8
-char ltab[128+1]	/* offset one for EOF */
+char ltab[128+1] =	/* offset one for EOF */
 {	0,
 	0,0,AX,0,0,0,0,0,0,0,B,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -60,6 +71,8 @@ char ltab[128+1]	/* offset one for EOF */
 };
 
 int l_first;
+
+int
 t_getc()
 {	int ch;
 	if(curunit->uend) return(EOF);
@@ -67,6 +80,8 @@ t_getc()
 	if(feof(cf)) curunit->uend = 1;
 	return(EOF);
 }
+
+int
 e_rsle()
 {
 	int ch;
@@ -79,10 +94,11 @@ flag lquit;
 int lcount,ltype;
 char *lchar;
 double lx,ly;
-#define ERR(x) if(n=(x)) return(n)
-#define GETC(x) (x=t_getc())
+#define ERR(x) if((n=(x))) return(n)
+#define GETC(x) ((x=t_getc()))
 
-l_read(number,ptr,len,type) ftnint *number,type; flex *ptr; ftnlen len;
+static int
+l_read(ftnint *number,flex *ptr,ftnlen len,ftnint type)
 {	int i,n,ch;
 	double *yy;
 	float *xx;
@@ -123,7 +139,7 @@ l_read(number,ptr,len,type) ftnint *number,type; flex *ptr; ftnlen len;
 		{	clearerr(cf);
 			err(elist->cierr,errno,"list in")
 		}
-		if(ltype==NULL) goto bump;
+		if(ltype==0) goto bump;
 		switch((int)type)
 		{
 		case TYSHORT:
@@ -155,17 +171,19 @@ l_read(number,ptr,len,type) ftnint *number,type; flex *ptr; ftnlen len;
 		}
 	bump:
 		if(lcount>0) lcount--;
-		ptr = (char *)ptr + len;
+		ptr = (flex *)((char *)ptr + len);
 	}
 	return(0);
 }
+
+int
 l_R()
 {	double a,b,c,d;
 	int i,ch,sign=0,da,db,dc;
 	a=b=c=d=0;
 	da=db=dc=0;
 	if(lcount>0) return(0);
-	ltype=NULL;
+	ltype=0;
 	for(GETC(ch);isblnk(ch);GETC(ch));
 	if(ch==',')
 	{	lcount=1;
@@ -212,7 +230,9 @@ l_R()
 	lx=b;
 	return(0);
 }
-rd_int(x) double *x;
+
+int
+rd_int(double *x)
 {	int ch,sign=0,i;
 	double y;
 	i=0;
@@ -229,10 +249,12 @@ rd_int(x) double *x;
 	*x = y;
 	return(y!=0?i:sign);
 }
+
+int
 l_C()
 {	int ch;
 	if(lcount>0) return(0);
-	ltype=NULL;
+	ltype=0;
 	for(GETC(ch);isblnk(ch);GETC(ch));
 	if(ch==',')
 	{	lcount=1;
@@ -243,9 +265,10 @@ l_C()
 		return(0);
 	}
 	if(ch!='(')
-	{	if(fscanf(cf,"%d",&lcount)!=1)
+	{	if(fscanf(cf,"%d",&lcount)!=1) {
 			if(!feof(cf)) err(elist->cierr,112,"no rep")
 			else err(elist->cierr,(EOF),"lread");
+		}
 		if(GETC(ch)!='*')
 		{	ungetc(ch,cf);
 			if(!feof(cf)) err(elist->cierr,112,"no star")
@@ -273,11 +296,13 @@ l_C()
 	ungetc(ch,cf);
 	return(0);
 }
+
+int
 l_L()
 {
 	int ch;
 	if(lcount>0) return(0);
-	ltype=NULL;
+	ltype=0;
 	while(isblnk(GETC(ch)));
 	if(ch==',')
 	{	lcount=1;
@@ -290,9 +315,10 @@ l_L()
 	if(isdigit(ch))
 	{	ungetc(ch,cf);
 		fscanf(cf,"%d",&lcount);
-		if(GETC(ch)!='*')
+		if(GETC(ch)!='*') {
 			if(!feof(cf)) err(elist->cierr,112,"no star")
 			else err(elist->cierr,(EOF),"lread");
+		}
 	}
 	else	ungetc(ch,cf);
 	if(GETC(ch)=='.') GETC(ch);
@@ -318,11 +344,13 @@ l_L()
 	return(0);
 }
 #define BUFSIZE	128
+
+int
 l_CHAR()
 {	int ch,size,i;
 	char quote,*p;
 	if(lcount>0) return(0);
-	ltype=NULL;
+	ltype=0;
 
 	while(isblnk(GETC(ch)));
 	if(ch==',')
@@ -379,11 +407,13 @@ l_CHAR()
 		}
 	}
 }
-s_rsle(a) cilist *a;
+
+int
+s_rsle(cilist *a)
 {
 	int n;
 	if(!init) f_init();
-	if(n=c_le(a,READ)) return(n);
+	if((n=c_le(a,READ))) return(n);
 	reading=1;
 	external=1;
 	formatted=1;
@@ -394,22 +424,27 @@ s_rsle(a) cilist *a;
 		return(nowreading(curunit));
 	else	return(0);
 }
+
+int
 t_sep()
 {
 	int ch;
 	for(GETC(ch);isblnk(ch);GETC(ch));
-	if(ch == EOF)
+	if(ch == EOF) {
 		if(feof(cf)) return(EOF);
 		else return(errno);
-	if(ch=='/')
-	{	lquit=1;
+	}
+	if(ch=='/') {
+		lquit=1;
 		return(0);
 	}
 	if(ch==',') for(GETC(ch);isblnk(ch);GETC(ch));
 	ungetc(ch,cf);
 	return(0);
 }
-c_le(a,flag) cilist *a;
+
+int
+c_le(cilist *a, int flag)
 {
 	fmtbuf="list io";
 	if(a->ciunit>=MXUNIT || a->ciunit<0)
@@ -423,7 +458,9 @@ c_le(a,flag) cilist *a;
 	if(!curunit->ufmt) err(a->cierr,103,"lio")
 	return(0);
 }
-do_lio(type,number,ptr,len) ftnint *number,*type; flex *ptr; ftnlen len;
+
+int
+do_lio(ftnint *type,ftnint *number,flex *ptr,ftnlen len)
 {
 	return((*lioproc)(number,ptr,len,*type));
 }

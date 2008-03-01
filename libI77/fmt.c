@@ -32,25 +32,28 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <stdlib.h>
+
 #include "fio.h"
 #include "fmt.h"
+
+static int type_f(int);
+static int ne_d(char *s,char **p);
+static int e_d(char *s,char **p);
+static int op_gen(int a,int b,int c,int d);
+static char *ap_end(char *s);
+
 #define skip(s) while(*s==' ') s++
-#ifdef interdata
 #define SYLMX 300
-#endif
-#ifdef pdp11
-#define SYLMX 300
-#endif
-#ifdef vax
-#define SYLMX 300
-#endif
 #define GLITCH '\2'
 	/* special quote character for stu */
 extern int cursor,scale;
 extern flag cblank,cplus;	/*blanks in I and compulsory plus*/
 struct syl syl[SYLMX];
 int parenlvl,pc,revloc;
-char *f_s(),*f_list(),*i_tem(),*gt_num();
+static char *f_s(char *s, int curloc),*f_list(char *),
+	*i_tem(char *),*gt_num(char *s, int *n);
+int
 pars_f(s) char *s;
 {
 	parenlvl=revloc=pc=0;
@@ -60,7 +63,9 @@ pars_f(s) char *s;
 	}
 	return(0);
 }
-char *f_s(s,curloc) char *s;
+
+char *
+f_s(char *s, int curloc)
 {
 	skip(s);
 	if(*s++!='(')
@@ -76,7 +81,8 @@ char *f_s(s,curloc) char *s;
 	skip(s);
 	return(s);
 }
-char *f_list(s) char *s;
+char *
+f_list(char *s)
 {
 	for(;*s!=0;)
 	{	skip(s);
@@ -95,7 +101,8 @@ char *f_list(s) char *s;
 	}
 	return(NULL);
 }
-char *i_tem(s) char *s;
+char *
+i_tem(char *s)
 {	char *t;
 	int n,curloc;
 	if(*s==')') return(s);
@@ -105,9 +112,10 @@ char *i_tem(s) char *s;
 	if((curloc=op_gen(STACK,n,0,0))<0) return(NULL);
 	return(f_s(s,curloc));
 }
-ne_d(s,p) char *s,**p;
+
+int
+ne_d(char *s,char **p)
 {	int n,x,sign=0;
-	char *ap_end();
 	switch(*s)
 	{
 	default: return(0);
@@ -169,7 +177,9 @@ ne_d(s,p) char *s,**p;
 	*p=s;
 	return(1);
 }
-e_d(s,p) char *s,**p;
+
+int
+e_d(char *s,char **p)
 {	int n,w,d,e,found=0,x=0;
 	char *sv=s;
 	s=gt_num(s,&n);
@@ -255,7 +265,9 @@ e_d(s,p) char *s,**p;
 	*p=s;
 	return(1);
 }
-op_gen(a,b,c,d)
+
+int
+op_gen(int a,int b,int c,int d)
 {	struct syl *p= &syl[pc];
 	if(pc>=SYLMX)
 	{	fprintf(stderr,"format too complicated:\n%s\n",
@@ -268,7 +280,8 @@ op_gen(a,b,c,d)
 	p->p3=d;
 	return(pc++);
 }
-char *gt_num(s,n) char *s; int *n;
+char *
+gt_num(char *s, int *n)
 {	int m=0,cnt=0;
 	char c;
 	for(c= *s;;c = *s)
@@ -288,12 +301,17 @@ char *gt_num(s,n) char *s; int *n;
 #define STKSZ 10
 int cnt[STKSZ],ret[STKSZ],cp,rp;
 flag workdone;
+
+int
 en_fio()
 {	ftnint one=1;
 	return(do_fio(&one,NULL,0l));
 }
-do_fio(number,ptr,len) ftnint *number; ftnlen len; char *ptr;
-{	struct syl *p;
+
+int
+do_fio(ftnint *number, char *ptr, ftnlen len)
+{
+	struct syl *p;
 	int n,i;
 	for(i=0;i<*number;i++,ptr+=len)
 	{
@@ -377,11 +395,15 @@ loop:	switch(type_f((p= &syl[pc])->op))
 	}
 	return(0);
 }
+
+void
 fmt_bg()
 {
 	workdone=cp=rp=pc=cursor=0;
 	cnt[0]=ret[0]=0;
 }
+
+int
 type_f(n)
 {
 	switch(n)
@@ -408,12 +430,17 @@ type_f(n)
 		return(ED);
 	}
 }
-char *ap_end(s) char *s;
+char *
+ap_end(char *s)
 {	char quote;
 	quote= *s++;
 	for(;*s;s++)
 	{	if(*s!=quote) continue;
 		if(*++s!=quote) return(s);
 	}
-	err(elist->cierr,100,"bad string");
+	if(elist->cierr)
+		errno= 100;
+	else
+		fatal(100,"bad string");
+	return s;
 }

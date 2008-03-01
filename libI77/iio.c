@@ -36,9 +36,10 @@
 #include "fmt.h"
 char *icptr,*icend;
 icilist *svic;
-extern int rd_ed(),rd_ned(),w_ed(),w_ned(),y_err();
-extern int z_wnew();
+static int y_err(void), z_wnew(void), z_rnew(void), c_si(icilist *);
 int icnum,icpos;
+
+int
 z_getc()
 {
 	if(icptr >= icend) err(svic->iciend,(EOF),"endfile");
@@ -46,7 +47,9 @@ z_getc()
 		return(*icptr++);
 	else	err(svic->icierr,110,"recend");
 }
-z_putc(c)
+
+int
+z_putc(int c)
 {
 	if(icptr >= icend) err(svic->icierr,110,"inwrite");
 	if(icpos++ < svic->icirlen)
@@ -54,14 +57,19 @@ z_putc(c)
 	else	err(svic->icierr,110,"recend");
 	return(0);
 }
+
+int
 z_rnew()
 {
 	icptr = svic->iciunit + (++icnum)*svic->icirlen;
 	icpos = 0;
+	return 0;
 }
-s_rsfi(a) icilist *a;
+
+int
+s_rsfi(icilist *a)
 {	int n;
-	if(n=c_si(a)) return(n);
+	if((n=c_si(a))) return(n);
 	reading=1;
 	doed=rd_ed;
 	doned=rd_ned;
@@ -70,9 +78,11 @@ s_rsfi(a) icilist *a;
 	doend = z_rnew;
 	return(0);
 }
-s_wsfi(a) icilist *a;
+
+int
+s_wsfi(icilist *a)
 {	int n;
-	if(n=c_si(a)) return(n);
+	if((n=c_si(a))) return(n);
 	reading=0;
 	doed=w_ed;
 	doned=w_ned;
@@ -81,7 +91,9 @@ s_wsfi(a) icilist *a;
 	doend = z_wnew;
 	return(0);
 }
-c_si(a) icilist *a;
+
+int
+c_si(icilist *a)
 {
 	fmtbuf=a->icifmt;
 	if(pars_f(fmtbuf)<0)
@@ -96,19 +108,26 @@ c_si(a) icilist *a;
 	icend=icptr+svic->icirlen*svic->icirnum;
 	return(0);
 }
+
+int
 z_wnew()
 {
 	while(icpos++ < svic->icirlen)
 		*icptr++ = ' ';
 	icpos = 0;
 	icnum++;
+	return 0;
 }
+
+int
 e_rsfi()
 {	int n;
 	n = en_fio();
 	fmtbuf = NULL;
 	return(n);
 }
+
+int
 e_wsfi()
 {
 	int n;
@@ -118,6 +137,8 @@ e_wsfi()
 		*icptr++ = ' ';
 	return(n);
 }
+
+int
 y_err()
 {
 	err(elist->cierr, 110, "iio");

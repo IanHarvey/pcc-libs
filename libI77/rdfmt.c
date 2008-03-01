@@ -32,11 +32,25 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <stdlib.h>
+
 #include "fio.h"
 #include "fmt.h"
 extern int cursor;
-rd_ed(p,ptr,len) char *ptr; struct syl *p; ftnlen len;
-{	int ch;
+
+int rd_I(unint *n, int w, ftnlen len);
+int rd_L(ftnint *n, int w);
+int rd_A(char *p, ftnlen len);
+int rd_AW(char *p, int w, ftnlen len);
+int rd_F(ufloat *p, int w, int d, ftnlen len);
+int rd_POS(char *s);
+int rd_H(int n, char *s);
+
+
+int
+rd_ed(struct syl *p, void *ptr, ftnlen len)
+{
+	int ch;
 	for(;cursor>0;cursor--) if((ch=(*getn)())<0) return(ch);
 	if(cursor<0)
 	{	if(recpos+cursor < 0) err(elist->cierr,110,"fmt")
@@ -72,7 +86,9 @@ rd_ed(p,ptr,len) char *ptr; struct syl *p; ftnlen len;
 	clearerr(cf);
 	return(errno);
 }
-rd_ned(p,ptr) char *ptr; struct syl *p;
+
+int
+rd_ned(struct syl *p, char *ptr)
 {
 	switch(p->op)
 	{
@@ -80,8 +96,8 @@ rd_ned(p,ptr) char *ptr; struct syl *p;
 			p->op,fmtbuf);
 		abort();
 	case APOS:
-		return(rd_POS(p->p1));
-	case H:	return(rd_H(p->p1,p->p2));
+		return(rd_POS((char /* XXX */ *)p->p1));
+	case H:	return(rd_H(p->p1,(char /* XXX */ *)p->p2));
 	case SLASH: return((*donewrec)());
 	case TR:
 	case X:	cursor += p->p1;
@@ -92,8 +108,11 @@ rd_ned(p,ptr) char *ptr; struct syl *p;
 		return(1);
 	}
 }
-rd_I(n,w,len) ftnlen len; uint *n;
-{	long x=0;
+
+int
+rd_I(unint *n, int w, ftnlen len)
+{
+	long x=0;
 	int i,sign=0,ch;
 	for(i=0;i<w;i++)
 	{
@@ -123,8 +142,11 @@ done:
 	else n->il=x;
 	return(0);
 }
-rd_L(n,w) ftnint *n;
-{	int ch,i,v = -1;
+
+int
+rd_L(ftnint *n, int w)
+{
+	int ch,i,v = -1;
 	for(i=0;i<w;i++)
 	{	if((ch=(*getn)())<0) return(ch);
 		if(ch=='t' && v==-1) v=1;
@@ -138,15 +160,20 @@ rd_L(n,w) ftnint *n;
 	*n=v;
 	return(0);
 }
-rd_F(p,w,d,len) ftnlen len; ufloat *p;
-{	double x,y;
+
+int
+rd_F(ufloat *p, int w, int d, ftnlen len)
+{
+	double x,y;
 	int i,sx,sz,ch,dot,ny,z,sawz;
+
+	ch = 0; /* XXX */
 	x=y=0;
 	sawz=z=ny=dot=sx=sz=0;
 	for(i=0;i<w;)
 	{	i++;
 		if((ch=(*getn)())<0) return(ch);
-		else if(ch==' ' && !cblank || ch=='+') continue;
+		else if((ch==' ' && !cblank) || ch=='+') continue;
 		else if(ch=='-') sx=1;
 		else if(ch<='9' && ch>='0')
 			x=10*x+ch-'0';
@@ -204,16 +231,22 @@ rd_F(p,w,d,len) ftnlen len; ufloat *p;
 	else p->pd=x;
 	return(0);
 }
-rd_A(p,len) char *p; ftnlen len;
-{	int i,ch;
+
+int
+rd_A(char *p, ftnlen len)
+{
+	int i,ch;
 	for(i=0;i<len;i++)
 	{	GET(ch);
 		*p++=VAL(ch);
 	}
 	return(0);
 }
-rd_AW(p,w,len) char *p; ftnlen len;
-{	int i,ch;
+
+int
+rd_AW(char *p, int w, ftnlen len)
+{
+	int i,ch;
 	if(w>=len)
 	{	for(i=0;i<w-len;i++)
 			GET(ch);
@@ -230,7 +263,9 @@ rd_AW(p,w,len) char *p; ftnlen len;
 	for(i=0;i<len-w;i++) *p++=' ';
 	return(0);
 }
-rd_H(n,s) char *s;
+
+int
+rd_H(int n, char *s)
 {	int i,ch;
 	for(i=0;i<n;i++)
 		if((ch=(*getn)())<0) return(ch);
@@ -238,9 +273,13 @@ rd_H(n,s) char *s;
 		else *s++ = ch=='\n'?' ':ch;
 	return(1);
 }
-rd_POS(s) char *s;
-{	char quote;
+
+int
+rd_POS(char *s)
+{
+	char quote;
 	int ch;
+
 	quote= *s++;
 	for(;*s;s++)
 		if(*s==quote && *(s+1)!=quote) break;

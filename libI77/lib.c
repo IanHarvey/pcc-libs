@@ -32,9 +32,12 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <string.h>
+
 #include "fio.h"
-setcilist(x,u,fmt,rec,xerr,end) cilist *x;
-char *fmt;
+
+void
+setcilist(cilist *x, int u, char *fmt,int rec,int xerr,int end)
 {
 	x->ciunit=u;
 	x->cifmt=fmt;
@@ -42,8 +45,10 @@ char *fmt;
 	x->cierr=xerr;
 	x->ciend=end;
 }
-setolist(x,xunit,fname,sta,fm,rl,blnk,oerr) olist *x;
-	char *fname,*sta,*fm,*blnk;
+
+void
+setolist(olist *x, int xunit, char *fname, char *sta, char *fm,
+    int rl, char *blnk, int oerr)
 {
 	x->oerr=oerr;
 	x->ounit=xunit;
@@ -54,13 +59,17 @@ setolist(x,xunit,fname,sta,fm,rl,blnk,oerr) olist *x;
 	x->orl=rl;
 	x->oblnk=blnk;
 }
-stcllist(x,xunit,stat,cerr) cllist *x; char *stat;
+
+void
+stcllist(cllist *x, int xunit, char *stat, int cerr)
 {
 	x->cerr=cerr;
 	x->cunit=xunit;
 	x->csta=stat;
 }
-setalist(x,xunit,aerr) alist *x;
+
+void
+setalist(alist *x, int xunit, int aerr)
 {
 	x->aunit=xunit;
 	x->aerr=aerr;

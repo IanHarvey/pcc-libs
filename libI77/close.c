@@ -32,8 +32,13 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <stdlib.h>
+#include <unistd.h>
+
 #include "fio.h"
-f_clos(a) cllist *a;
+
+int
+f_clos(cllist *a)
 {	unit *b;
 	if(a->cunit >= MXUNIT) return(0);
 	b= &units[a->cunit];
@@ -65,6 +70,8 @@ f_clos(a) cllist *a;
 	else if(b->uscrtch==1) goto delete;
 	else goto keep;
 }
+
+void
 f_exit()
 {	int i;
 	cllist xx;
@@ -76,6 +83,8 @@ f_exit()
 		f_clos(&xx);
 	}
 }
+
+void
 flush_()
 {	int i;
 	for(i=0;i<MXUNIT;i++)
