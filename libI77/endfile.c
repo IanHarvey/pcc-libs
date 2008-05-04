@@ -60,8 +60,9 @@ t_runc(unit *b)
 {
 	char buf[128],nm[16];
 	FILE *tmp;
-	int n,m;
+	int n,m, fd;
 	long loc,len;
+
 	if(b->url) return(0);	/*don't truncate direct files*/
 	loc=ftell(b->ufd);
 	fseek(b->ufd,0L,2);
@@ -69,8 +70,8 @@ t_runc(unit *b)
 	if(loc==len || b->useek==0 || b->ufnm==NULL) return(0);
 	strcpy(nm,"tmp.FXXXXXX");
 	if(b->uwrt) nowreading(b);
-	mktemp(nm);
-	tmp=fopen(nm,"w");
+	fd = mkstemp(nm);
+	tmp=fdopen(fd,"w");
 	fseek(b->ufd,0L,0);
 	for(;loc>0;)
 	{

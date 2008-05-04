@@ -104,7 +104,7 @@ unconnected:
 	 case 's':
 		b->uscrtch=1;
 		strcpy(buf,"tmp.FXXXXXX");
-		mktemp(buf);
+		close(mkstemp(buf));
 		goto done;
 	case 'n':
 		b->uscrtch=0;

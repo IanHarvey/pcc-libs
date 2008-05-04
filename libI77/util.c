@@ -34,7 +34,7 @@
  */
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/dir.h>
+#include <dirent.h>
 
 #include <fcntl.h>
 #include <stdlib.h>
@@ -94,7 +94,7 @@ static char *
 curdir(void)
 {	char name[256],*bufpos = name;
 	struct stat x;
-	struct direct y;
+	struct dirent y;
 	int file,i;
 	*bufpos++ = 0;
 loop:	stat(".",&x);

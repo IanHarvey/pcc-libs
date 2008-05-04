@@ -68,9 +68,9 @@ struct syl
 #define AW 31
 extern struct syl syl[];
 extern int pc,parenlvl,revloc;
-extern int (*doed)(struct syl *p, void *ptr, ftnlen len),
-	(*doned)(struct syl *p, char *ptr);
-extern int (*dorevert)(void),(*donewrec)(void),(*doend)(void);
+int (*doed)(struct syl *p, void *ptr, ftnlen len);
+int (*doned)(struct syl *p, char *ptr);
+int (*dorevert)(void),(*donewrec)(void),(*doend)(void);
 extern flag cblank,cplus,workdone;
 extern char *fmtbuf;
 extern int scale;
