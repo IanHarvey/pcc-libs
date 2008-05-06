@@ -58,7 +58,7 @@ f_open(olist *a)
 	if(b->ufd!=0) goto connected;
 unconnected:
 	b->url=a->orl;
-	if(*a->oblnk=='b') b->ublnk=1;
+	if(a->oblnk && *a->oblnk=='b') b->ublnk=1;
 	else b->ublnk=0;
 	if(a->ofm==0)
 	{	if(b->url>0) b->ufmt=0;
@@ -75,7 +75,7 @@ unconnected:
 		if(a->ofnm==0) err(a->oerr,107,"open")
 		g_char(a->ofnm,a->ofnmlen,buf);
 		b->uscrtch=0;
-		if(*a->osta=='o' && access(buf,0))
+		if(a->osta && *a->osta=='o' && access(buf,0))
 			err(a->oerr,errno,"open")
 	done:
 		b->ufnm=(char *) calloc(strlen(buf)+1,sizeof(char));
