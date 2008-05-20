@@ -1,0 +1,28 @@
+#	$Id$
+#
+# top-level Makefile
+#
+
+VPATH = @srcdir@
+
+SUBDIR = libsoftfloat libpcc
+
+all: $(SUBDIR)
+
+install:
+	cd libsoftfloat && $(MAKE) install
+	cd libpcc && $(MAKE) install
+
+clean:
+	cd libsoftfloat && $(MAKE) clean
+	cd libpcc && $(MAKE) clean
+
+distclean: clean
+	cd libsoftfloat && $(MAKE) distclean
+	/bin/rm -rf Makefile config.log config.status \
+		configure.lineno config.h autom4te.cache
+
+$(SUBDIR): nonexistant
+	cd $@; $(MAKE) all $(MFLAGS)
+
+nonexistant:
