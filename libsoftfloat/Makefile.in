@@ -17,10 +17,9 @@ TARGMACH = @targmach@
 VERSION = @version@
 PCCLIBDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/lib
 
-CPPFLAGS += @CPPFLAGS@ -DSOFTFLOAT_FOR_GCC -I$(top_builddir) -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH)
+CPPFLAGS += @CPPFLAGS@ -DSOFTFLOAT_FOR_GCC -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH)
 
 LIBS = @LIBS@
-LDFLAGS = @LDFLAGS@
 AR = @AR@
 RANLIB = @RANLIB@
 INSTALL = @INSTALL@

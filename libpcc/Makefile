@@ -11,9 +11,9 @@ prefix = /usr/local
 exec_prefix = ${prefix}
 libdir = ${exec_prefix}/lib
 
-CC = gcc
-TARGOS = darwin
-TARGMACH = powerpc
+CC = i386-netbsdelf-pcc
+TARGOS = netbsd
+TARGMACH = i386
 VERSION = 0.9.9
 PCCLIBDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/lib
 PCCINCDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/include
@@ -21,7 +21,6 @@ PCCINCDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/include
 CPPFLAGS +=  -I$(top_builddir) -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH)
 
 LIBS = 
-LDFLAGS = 
 AR = ar
 RANLIB = ranlib
 INSTALL = /usr/bin/install -c

@@ -65,7 +65,7 @@ if test "X$targos" = X -o "X$targmach" = X; then
 	AC_MSG_ERROR(['$target' is not (yet) supported by pcc-libs.])
 fi
 
-AC_PROG_CC
+AC_CHECK_PROG(CC, cc, cc, :)
 AC_CHECK_PROG(AR, ar, ar, :)
 AC_PROG_RANLIB
 
@@ -75,6 +75,8 @@ AC_SUBST(version)
 AC_SUBST(prefix)
 AC_SUBST(libdir)
 AC_SUBST(includedir)
+AC_SUBST(CPPFLAGS)
+AC_SUBST(CFLAGS)
 
 AC_CONFIG_FILES([Makefile
                 libsoftfloat/Makefile

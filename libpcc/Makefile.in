@@ -21,7 +21,6 @@ PCCINCDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/include
 CPPFLAGS += @CPPFLAGS@ -I$(top_builddir) -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH)
 
 LIBS = @LIBS@
-LDFLAGS = @LDFLAGS@
 AR = @AR@
 RANLIB = @RANLIB@
 INSTALL = @INSTALL@
