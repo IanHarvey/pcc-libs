@@ -19,6 +19,7 @@ clean:
 
 distclean: clean
 	cd libsoftfloat && $(MAKE) distclean
+	cd libpcc && $(MAKE) distclean
 	/bin/rm -rf Makefile config.log config.status \
 		configure.lineno config.h autom4te.cache
 
