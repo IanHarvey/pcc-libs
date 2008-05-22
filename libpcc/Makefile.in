@@ -18,13 +18,12 @@ VERSION = @version@
 PCCLIBDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/lib
 PCCINCDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/include
 
-CPPFLAGS += @CPPFLAGS@ -I$(top_builddir) -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH)
+CPPFLAGS += @CPPFLAGS@ -I$(top_builddir) -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH) @ENDIAN_FLAG@
 
 LIBS = @LIBS@
 AR = @AR@
 RANLIB = @RANLIB@
 INSTALL = @INSTALL@
-INSTALL_PROGRAM = @INSTALL_PROGRAM@
 
 HEADERS +=	float.h stdarg.h stdbool.h stddef.h
 
@@ -54,7 +53,7 @@ install:
 		$(INSTALL) -m 644 $(srcdir)/include/$$i $(PCCINCDIR)/$$i; \
 	done
 	test -z "$(PCCLIBDIR)" || mkdir -p "$(PCCLIBDIR)"
-	$(INSTALL_PROGRAM) $(DEST) $(PCCLIBDIR)
+	$(INSTALL) $(DEST) $(PCCLIBDIR)
 
 clean:
 	/bin/rm -f $(OBJS) $(DEST)

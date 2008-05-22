@@ -7,31 +7,31 @@
 #endif
 
 #if defined(__STDDEF_H__) || defined(__need_ptrdiff_t)
-#ifndef _PTRDIFF_T_
-#define _PTRDIFF_T_
+#ifndef _PTRDIFF_T
+#define _PTRDIFF_T
 typedef int ptrdiff_t;
 #endif
 #endif
 
 #if defined(_STDDEF_H_) || defined(__need_size_t)
-#ifndef _SIZE_T_
-#define _SIZE_T_
+#ifndef _SIZE_T
+#define _SIZE_T
 typedef unsigned int size_t;
 #endif
 #endif
 
 #if defined(_STDDEF_H_) || defined(__need_wchar_t)
 #ifndef __cplusplus
-#ifndef _WCHAR_T_
-#define _WCHAR_T_
+#ifndef _WCHAR_T
+#define _WCHAR_T
 typedef unsigned short wchar_t;
 #endif
 #endif
 #endif
 
 #if defined(_STDDEF_H_) || defined(__need_wint_t)
-#ifndef _WINT_T_
-#define _WINT_T_
+#ifndef _WINT_T
+#define _WINT_T
 typedef short wint_t;
 #endif
 #endif

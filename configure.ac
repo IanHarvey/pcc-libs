@@ -10,59 +10,114 @@ AC_CANONICAL_TARGET
 version=$PACKAGE_VERSION
 
 case "$target_os" in
-	apple)
-		targos=apple
-		targmach="$target_cpu"
-		;;
-	darwin*)
-		targos=darwin
-		targmach="$target_cpu"
-		;;
-	dragonfly*)
-		targos=dragonfly
-		targmach="$target_cpu"
-		;;
-	freebsd*)
-		targos=freebsd
-		targmach="$target_cpu"
-		;;
-	linux*)
-		targos=linux
-		targmach="$target_cpu"
-		;;
-	minux)
-		targos=minix
-		targmach="$target_cpu"
-		;;
-	netbsd*)
-		targos=netbsd
-		targmach="$target_cpu"
-		;;
-	openbsd*)
-		targos=openbsd
-		targmach="$target_cpu"
-		;;
-	midnightbsd*)
-		targos=midnightbsd
-		targmach="$target_cpu"
-		;;
-	mirbsd*)
-		targos=mirbsd
-		targmach="$target_cpu"
-		;;
-	window*|pe*)
-		target_alias=i386-pe
-		targos=win32
-		targmach="$target_cpu"
-		;;
-	*)
-		targos="$target_os"
-		targmach="$target_cpu"
-		;;
+    netbsd*)
+	targos=netbsd
+	case "$target_cpu" in
+	    armeb) targmach=arm endian=big ;;
+	    arm*) targmach=arm ;;
+	    i?86) targmach=i386 ;;
+	    m68k*) targmach=m68k endian=big ;;
+	    mipseb) targmach=mips endian=big ;;
+	    mips*) targmach=mips ;;
+	    powerpc) targmach=powerpc endian=big ;;
+	    sparc64) targmach=sparc64 endian=big ;;
+	    vax) targmach=vax ;;
+	    pdp10) targmach=pdp10 ;;
+	esac
+	;;
+
+    openbsd*)
+	targos=openbsd
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	    vax) targmach=vax ;;
+	    powerpc) targmach=powerpc endian=big ;;
+	    sparc64) targmach=sparc64 endian=big ;;
+	esac
+	;;
+
+    dragonfly*)
+	targos=dragonfly
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	esac
+	;;
+
+    darwin*)
+	targos=darwin
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	    powerpc) targmach=powerpc endian=big ;;
+	esac
+        ;;
+
+    freebsd*)
+	targos=freebsd
+	case "$target_cpu" in
+	    i386) targmach=i386 ;;
+	esac
+	;;
+
+    linux*)
+	targos=linux
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	    powerpc*) targmach=powerpc endian=big ;;
+	esac
+	;;
+
+    midnightbsd*)
+	targos=midnightbsd
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	    sparc64) targmach=sparc64 endian=big ;;
+	esac
+	;;
+
+    mirbsd*)
+	targos=mirbsd
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	esac
+	;;
+
+    windows*|pe*)
+	target_alias=i386-pe
+	targos=win32
+	targmach=i386
+	;;
+
+    apple)
+	targos=apple
+	case "$target_cpu" in
+	    m68k) targmach=m68k endian=big ;;
+	esac
+	;;
+
+    minix)
+	targos=minix
+	case "$target_cpu" in
+	    m68k) targmach=m68k endian=big ;;
+	esac
+	;;
+
+    *)
+        targos="$target_os"
+	case "$target_cpu" in
+	    m16c) targmach=m16c ;;
+	    nova) targmach=nova ;;
+	esac
+	;;
 esac
 
 if test "X$targos" = X -o "X$targmach" = X; then
 	AC_MSG_ERROR(['$target' is not (yet) supported by pcc-libs.])
+fi
+
+if test "X$endian" = "Xbig"; then
+	AC_SUBST([ENDIAN_FLAG],[-D__BIG_ENDIAN__=1])
+else
+	AC_SUBST([ENDIAN_FLAG],[-D__LITTLE_ENDIAN=1])
 fi
 
 AC_CHECK_PROG(CC, cc, cc, :)

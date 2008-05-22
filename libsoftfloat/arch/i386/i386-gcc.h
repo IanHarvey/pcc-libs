@@ -5,13 +5,7 @@
 One of the macros `BIGENDIAN' or `LITTLEENDIAN' must be defined.
 -------------------------------------------------------------------------------
 */
-#include <machine/endian.h>
-#if _BYTE_ORDER == _BIG_ENDIAN
-#define BIGENDIAN
-#endif
-#if _BYTE_ORDER == _LITTLE_ENDIAN
 #define LITTLEENDIAN
-#endif
 
 /*
 -------------------------------------------------------------------------------

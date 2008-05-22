@@ -52,11 +52,19 @@
  */
 
 #include <sys/types.h>
-#if !defined(_KERNEL) && !defined(_STANDALONE)
 #include <limits.h>
-#else
-#include <machine/limits.h>
+
+#ifndef QUAD_MIN
+#define QUAD_MIN	(-0x7fffffffffffffffLL-1)
 #endif
+#ifndef QUAD_MAX
+#define QUAD_MAX	0x7fffffffffffffffLL
+#endif
+#ifndef UQUAD_MAX
+#define UQUAD_MAX	0xffffffffffffffffULL
+#endif
+
+
 
 /*
  * Depending on the desired operation, we view a `long long' (aka quad_t) in
@@ -72,8 +80,13 @@ union uu {
 /*
  * Define high and low parts of a quad_t.
  */
-#define	H		_QUAD_HIGHWORD
-#define	L		_QUAD_LOWWORD
+#ifdef __BIGENDIAN__
+#define	H		0
+#define	L		1
+#else
+#define	H		0
+#define	L		1
+#endif
 
 /*
  * Total number of bits in a quad_t and in the pieces that make it up.
