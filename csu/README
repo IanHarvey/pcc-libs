@@ -1,0 +1,12 @@
+OS-depdendent  and target-dependent:
+
+crt0		startup code for programs compiled -static
+crt1		startup code for programs compiled -dynamic
+gcrt1		profiling startup code for programs compiled -dynamic
+crti		beginning of _init() and _fini() functions
+crtn		end of _init() and _fini() functions
+
+OS and target-independent:
+
+crtbegin	support for calling global ctors/dtors
+crtend		end of the ctor/dtor lists
