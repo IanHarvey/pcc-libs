@@ -52,7 +52,7 @@ _mcleanup(void)
 extern struct mach_header _mh_execute_header;
 
 static void
-_startup(int init)
+_helper(int init)
 {
 	struct mach_header *hdr = &_mh_execute_header;
 	char *ptr = (char *)(hdr + 1);
@@ -85,13 +85,13 @@ _startup(int init)
 void
 _init(void)
 {
-	_startup(1);
+	_helper(1);
 }
 
 void
 _fini(void)
 {
-	_startup(0);
+	_helper(0);
 }
 
 #ifdef DYNAMIC

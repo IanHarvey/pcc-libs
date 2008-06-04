@@ -15,6 +15,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#define NULL (void *)0
+
 extern int main(int argc, char *argv[], char *envp[]);
 extern void exit(int);
 extern int atexit(void (*fcn)(void));
