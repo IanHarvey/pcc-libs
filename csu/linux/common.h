@@ -21,10 +21,8 @@ extern int main(int argc, char *argv[]);
 extern void exit(int);
 extern int atexit(void (*fcn)(void));
 
-static char *_strrchr(char *, int);
-
 #if PROFILE
-extern void moninit(void);
+extern void monstartup(unsigned long, unsigned long);
 static void _mcleanup(void);
 extern void monitor(char *, char *, char *, int, int);
 #endif

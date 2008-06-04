@@ -97,10 +97,14 @@ __do_global_dtors_aux(void)
 	finished = 1;
 }
 
-#define MD_CALL_STATIC_FUNCTION(section, func)		\
-	asm(	".section " #section "\n"		\
-		"call " #func "\n"			\
-		".previous\n");
+#define MD_CALL_STATIC_FUNCTION(section, func)				\
+void __call_##func(void);						\
+void __call_##func(void)						\
+{									\
+	__asm volatile (".section " #section);				\
+	func();								\
+	__asm volatile (".previous");					\
+}
 
 MD_CALL_STATIC_FUNCTION(.init, __do_global_ctors_aux)
 MD_CALL_STATIC_FUNCTION(.fini, __do_global_dtors_aux)

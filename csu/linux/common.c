@@ -15,20 +15,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-static char *
-_strrchr(char *p, int ch)
-{
-	char *save;
-
-	for (save = NULL;; ++p) {
-		if (*p == ch)
-			save = (char *)p;
-		if (!*p)
-			return(save);
-	}
-	/* NOTREACHED */
-}
-
 #ifdef PROFILE
 static void
 _mcleanup(void)
