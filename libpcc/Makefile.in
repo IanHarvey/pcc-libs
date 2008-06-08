@@ -36,6 +36,8 @@ OBJS +=		ashldi3.o ashrdi3.o lshrdi3.o
 
 OBJS +=		_alloca.o
 
+OBJS +=		ssp.o
+
 DEST = libpcc.a
 
 all: $(DEST)
