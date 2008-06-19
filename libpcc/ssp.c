@@ -28,7 +28,7 @@
 
 extern char *__progname;
 
-int __ssp_cookie;
+int __stack_chk_guard;
 
 void __constructor
 __ssp_init(void)
@@ -36,22 +36,23 @@ __ssp_init(void)
 	int fd;
 	size_t sz;
 
-	if (__ssp_cookie != 0)
+	if (__stack_chk_guard != 0)
 		return;
 
 	fd = open("/dev/urandom", 0);
 	if (fd > 0) {
-		sz = read(fd, (char *)&__ssp_cookie, sizeof(__ssp_cookie));
+		sz = read(fd, (char *)&__stack_chk_guard,
+		    sizeof(__stack_chk_guard));
 		close(fd);
-		if (sz == sizeof(__ssp_cookie))
+		if (sz == sizeof(__stack_chk_guard))
 			return;
 	}
 
-	__ssp_cookie = 0x00000aff;
+	__stack_chk_guard = 0x00000aff;
 }
 
 void
-__ssp_error(void)
+__stack_chk_fail(void)
 {
 	const char msg[] = ": stack smashing attack detected\n";
 	write(2, __progname, strlen(__progname));
