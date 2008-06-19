@@ -8,7 +8,7 @@
 #endif
 #undef __need___va_list
 
-#ifdef _STDARG_H_
+#ifndef _VA_LIST
 typedef char * va_list;
 #define _VA_LIST
 #endif

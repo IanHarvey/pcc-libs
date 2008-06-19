@@ -18,6 +18,10 @@ typedef int ptrdiff_t;
 #define _SIZE_T
 typedef unsigned int size_t;
 #endif
+#ifndef _OFF_T
+#define _OFF_T
+typedef long off_t;
+#endif
 #endif
 
 #if defined(_STDDEF_H_) || defined(__need_wchar_t)
