@@ -15,6 +15,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#if defined(__ppc__)
+#define IDENT(x) asm(".cstring\n\t.ascii \"" x "\\0\"")
+#elif defined(__i386__)
+#define IDENT(x) asm(".cstring\n\t.ascii \"" x "\\0\"")
+#endif
+
 #define NULL (void *)0
 
 extern int main(int argc, char *argv[], char *envp[]);
