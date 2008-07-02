@@ -64,6 +64,10 @@
 #define UQUAD_MAX	0xffffffffffffffffULL
 #endif
 
+#ifdef WIN32
+typedef long long		quad_t;
+typedef unsigned long long 	u_quad_t;
+#endif
 
 
 /*
@@ -71,10 +75,10 @@
  * one or more of the following formats.
  */
 union uu {
-	quad_t	q;		/* as a (signed) quad */
+	quad_t q;		/* as a (signed) quad */
 	u_quad_t uq;		/* as an unsigned quad */
-	int	sl[2];		/* as two signed ints */
-	u_int	ul[2];		/* as two unsigned ints */
+	int sl[2];		/* as two signed ints */
+	unsigned int ul[2];	/* as two unsigned ints */
 };
 
 /*
@@ -100,15 +104,15 @@ union uu {
 /*
  * Extract high and low shortwords from longword, and move low shortword of
  * longword to upper half of long, i.e., produce the upper longword of
- * ((quad_t)(x) << (number_of_bits_in_int/2)).  (`x' must actually be u_int.)
+ * ((quad_t)(x) << (number_of_bits_in_int/2)).  (`x' must actually be unsigned int.)
  *
  * These are used in the multiply code, to split a longword into upper
  * and lower halves, and to reassemble a product as a quad_t, shifted left
  * (sizeof(int)*CHAR_BIT/2).
  */
-#define	HHALF(x)	((u_int)(x) >> HALF_BITS)
-#define	LHALF(x)	((u_int)(x) & (((int)1 << HALF_BITS) - 1))
-#define	LHUP(x)		((u_int)(x) << HALF_BITS)
+#define	HHALF(x)	((unsigned int)(x) >> HALF_BITS)
+#define	LHALF(x)	((unsigned int)(x) & (((int)1 << HALF_BITS) - 1))
+#define	LHUP(x)		((unsigned int)(x) << HALF_BITS)
 
 /*
  * XXX
@@ -118,31 +122,29 @@ union uu {
  */
 typedef unsigned int	qshift_t;
 
-__BEGIN_DECLS
-quad_t __adddi3 __P((quad_t, quad_t));
-quad_t __anddi3 __P((quad_t, quad_t));
-quad_t __ashldi3 __P((quad_t, qshift_t));
-quad_t __ashrdi3 __P((quad_t, qshift_t));
-int __cmpdi2 __P((quad_t, quad_t));
-quad_t __divdi3 __P((quad_t, quad_t));
-quad_t __fixdfdi __P((double));
-quad_t __fixsfdi __P((float));
-u_quad_t __fixunsdfdi __P((double));
-u_quad_t __fixunssfdi __P((float));
-double __floatdidf __P((quad_t));
-float __floatdisf __P((quad_t));
-double __floatunsdidf __P((u_quad_t));
-quad_t __iordi3 __P((quad_t, quad_t));
-quad_t __lshldi3 __P((quad_t, qshift_t));
-quad_t __lshrdi3 __P((quad_t, qshift_t));
-quad_t __moddi3 __P((quad_t, quad_t));
-quad_t __muldi3 __P((quad_t, quad_t));
-quad_t __negdi2 __P((quad_t));
-quad_t __one_cmpldi2 __P((quad_t));
-u_quad_t __qdivrem __P((u_quad_t, u_quad_t, u_quad_t *));
-quad_t __subdi3 __P((quad_t, quad_t));
-int __ucmpdi2 __P((u_quad_t, u_quad_t));
-u_quad_t __udivdi3 __P((u_quad_t, u_quad_t ));
-u_quad_t __umoddi3 __P((u_quad_t, u_quad_t ));
-quad_t __xordi3 __P((quad_t, quad_t));
-__END_DECLS
+quad_t __adddi3(quad_t, quad_t);
+quad_t __anddi3(quad_t, quad_t);
+quad_t __ashldi3(quad_t, qshift_t);
+quad_t __ashrdi3(quad_t, qshift_t);
+int __cmpdi2(quad_t, quad_t);
+quad_t __divdi3(quad_t, quad_t);
+quad_t __fixdfdi(double);
+quad_t __fixsfdi(float);
+u_quad_t __fixunsdfdi(double);
+u_quad_t __fixunssfdi(float);
+double __floatdidf(quad_t);
+float __floatdisf(quad_t);
+double __floatunsdidf(u_quad_t);
+quad_t __iordi3(quad_t, quad_t);
+quad_t __lshldi3(quad_t, qshift_t);
+quad_t __lshrdi3(quad_t, qshift_t);
+quad_t __moddi3(quad_t, quad_t);
+quad_t __muldi3(quad_t, quad_t);
+quad_t __negdi2(quad_t);
+quad_t __one_cmpldi2(quad_t);
+u_quad_t __qdivrem(u_quad_t, u_quad_t, u_quad_t *);
+quad_t __subdi3(quad_t, quad_t);
+int __ucmpdi2(u_quad_t, u_quad_t);
+u_quad_t __udivdi3(u_quad_t, u_quad_t);
+u_quad_t __umoddi3(u_quad_t, u_quad_t);
+quad_t __xordi3(quad_t, quad_t);

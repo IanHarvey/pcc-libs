@@ -1,3 +1,4 @@
+/*	$Id$	*/
 /*	$NetBSD: qdivrem.c,v 1.1 2005/12/20 19:28:51 christos Exp $	*/
 
 /*-
@@ -33,15 +34,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)qdivrem.c	8.1 (Berkeley) 6/4/93";
-#else
-__RCSID("$NetBSD: qdivrem.c,v 1.1 2005/12/20 19:28:51 christos Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
-
 /*
  * Multiprecision divide.  This algorithm is from Knuth vol. 2 (2nd ed),
  * section 4.3.1, pp. 257--259.
@@ -52,22 +44,22 @@ __RCSID("$NetBSD: qdivrem.c,v 1.1 2005/12/20 19:28:51 christos Exp $");
 #define	B	((int)1 << HALF_BITS)	/* digit base */
 
 /* Combine two `digits' to make a single two-digit number. */
-#define	COMBINE(a, b) (((u_int)(a) << HALF_BITS) | (b))
+#define	COMBINE(a, b) (((unsigned int)(a) << HALF_BITS) | (b))
 
 /* select a type for digits in base B: use unsigned short if they fit */
 #if UINT_MAX == 0xffffffffU && USHRT_MAX >= 0xffff
 typedef unsigned short digit;
 #else
-typedef u_int digit;
+typedef unsigned int digit;
 #endif
 
-static void shl __P((digit *p, int len, int sh));
+static void shl(digit *p, int len, int sh);
 
 /*
  * __qdivrem(u, v, rem) returns u/v and, optionally, sets *rem to u%v.
  *
  * We do this in base 2-sup-HALF_BITS, so that all intermediate products
- * fit within u_int.  As a consequence, the maximum length dividend and
+ * fit within unsigned int.  As a consequence, the maximum length dividend and
  * divisor are 4 `digits' in this base (they are shorter if they have
  * leading zeros).
  */
@@ -78,7 +70,7 @@ __qdivrem(uq, vq, arq)
 	union uu tmp;
 	digit *u, *v, *q;
 	digit v1, v2;
-	u_int qhat, rhat, t;
+	unsigned int qhat, rhat, t;
 	int m, n, d, j, i;
 	digit uspace[5], vspace[5], qspace[5];
 
@@ -129,7 +121,7 @@ __qdivrem(uq, vq, arq)
 	v[4] = (digit)LHALF(tmp.ul[L]);
 	for (n = 4; v[1] == 0; v++) {
 		if (--n == 1) {
-			u_int rbj;	/* r*B+u[j] (not root boy jim) */
+			unsigned int rbj;	/* r*B+u[j] (not root boy jim) */
 			digit q1, q2, q3, q4;
 
 			/*
@@ -205,7 +197,7 @@ __qdivrem(uq, vq, arq)
 			rhat = uj1;
 			goto qhat_too_big;
 		} else {
-			u_int nn = COMBINE(uj0, uj1);
+			unsigned int nn = COMBINE(uj0, uj1);
 			qhat = nn / v1;
 			rhat = nn % v1;
 		}
@@ -254,8 +246,8 @@ __qdivrem(uq, vq, arq)
 	if (arq) {
 		if (d) {
 			for (i = m + n; i > m; --i)
-				u[i] = (digit)(((u_int)u[i] >> d) |
-				    LHALF((u_int)u[i - 1] << (HALF_BITS - d)));
+				u[i] = (digit)(((unsigned int)u[i] >> d) |
+				    LHALF((unsigned int)u[i - 1] << (HALF_BITS - d)));
 			u[i] = 0;
 		}
 		tmp.ul[H] = COMBINE(uspace[1], uspace[2]);
@@ -279,7 +271,7 @@ shl(digit *p, int len, int sh)
 	int i;
 
 	for (i = 0; i < len; i++)
-		p[i] = (digit)(LHALF((u_int)p[i] << sh) |
-		    ((u_int)p[i + 1] >> (HALF_BITS - sh)));
-	p[i] = (digit)(LHALF((u_int)p[i] << sh));
+		p[i] = (digit)(LHALF((unsigned int)p[i] << sh) |
+		    ((unsigned int)p[i + 1] >> (HALF_BITS - sh)));
+	p[i] = (digit)(LHALF((unsigned int)p[i] << sh));
 }

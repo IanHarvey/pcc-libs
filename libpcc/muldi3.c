@@ -1,3 +1,4 @@
+/*	$Id$	*/
 /*	$NetBSD: muldi3.c,v 1.1 2005/12/20 19:28:51 christos Exp $	*/
 
 /*-
@@ -33,15 +34,6 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)muldi3.c	8.1 (Berkeley) 6/4/93";
-#else
-__RCSID("$NetBSD: muldi3.c,v 1.1 2005/12/20 19:28:51 christos Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
-
 #include "quad.h"
 
 /*
@@ -50,7 +42,7 @@ __RCSID("$NetBSD: muldi3.c,v 1.1 2005/12/20 19:28:51 christos Exp $");
  * Our algorithm is based on the following.  Split incoming quad values
  * u and v (where u,v >= 0) into
  *
- *	u = 2^n u1  *  u0	(n = number of bits in `u_int', usu. 32)
+ *	u = 2^n u1  *  u0	(n = number of bits in `unsigned int', usu. 32)
  *
  * and 
  *
@@ -101,14 +93,14 @@ __RCSID("$NetBSD: muldi3.c,v 1.1 2005/12/20 19:28:51 christos Exp $");
  * of 2^n in either one will also vanish.  Only `low' need be computed
  * mod 2^2n, and only because of the final term above.
  */
-static quad_t __lmulq(u_int, u_int);
+static quad_t __lmulq(unsigned int, unsigned int);
 
 quad_t
 __muldi3(a, b)
 	quad_t a, b;
 {
 	union uu u, v, low, prod;
-	u_int high, mid, udiff, vdiff;
+	unsigned int high, mid, udiff, vdiff;
 	int negall, negmid;
 #define	u1	u.ul[H]
 #define	u0	u.ul[L]
@@ -141,7 +133,7 @@ __muldi3(a, b)
 		 * Compute the three intermediate products, remembering
 		 * whether the middle term is negative.  We can discard
 		 * any upper bits in high and mid, so we can use native
-		 * u_int * u_int => u_int arithmetic.
+		 * unsigned int * unsigned int => unsigned int arithmetic.
 		 */
 		low.q = __lmulq(u0, v0);
 
@@ -182,17 +174,17 @@ __muldi3(a, b)
  * we can get away with native multiplication---none of our input terms
  * exceeds (UINT_MAX >> 1).
  *
- * Note that, for u_int l, the quad-precision result
+ * Note that, for unsigned int l, the quad-precision result
  *
  *	l << N
  *
  * splits into high and low ints as HHALF(l) and LHUP(l) respectively.
  */
 static quad_t
-__lmulq(u_int u, u_int v)
+__lmulq(unsigned int u, unsigned int v)
 {
-	u_int u1, u0, v1, v0, udiff, vdiff, high, mid, low;
-	u_int prodh, prodl, was;
+	unsigned int u1, u0, v1, v0, udiff, vdiff, high, mid, low;
+	unsigned int prodh, prodl, was;
 	union uu prod;
 	int neg;
 

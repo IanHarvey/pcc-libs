@@ -1,3 +1,4 @@
+/*	$Id$	*/
 /*	$NetBSD: divdi3.c,v 1.1 2005/12/20 19:28:51 christos Exp $	*/
 
 /*-
@@ -32,15 +33,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)divdi3.c	8.1 (Berkeley) 6/4/93";
-#else
-__RCSID("$NetBSD: divdi3.c,v 1.1 2005/12/20 19:28:51 christos Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
 
 #include "quad.h"
 

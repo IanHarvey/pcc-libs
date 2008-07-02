@@ -1,3 +1,4 @@
+/*	$Id$	*/
 /*	$NetBSD: fixunssfdi.c,v 1.6 2003/08/07 16:43:16 agc Exp $	*/
 
 /*-
@@ -32,15 +33,6 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-#if 0
-static char sccsid[] = "@(#)fixunssfdi.c	8.1 (Berkeley) 6/4/93";
-#else
-__RCSID("$NetBSD: fixunssfdi.c,v 1.6 2003/08/07 16:43:16 agc Exp $");
-#endif
-#endif /* LIBC_SCCS and not lint */
 
 #include "quad.h"
 
@@ -98,6 +90,6 @@ __fixunssfdi(float f)
 		t.ul[H]++;
 		x -= UINT_MAX;
 	}
-	t.ul[L] = (u_int)x;
+	t.ul[L] = (unsigned int)x;
 	return (t.uq);
 }
