@@ -1,5 +1,4 @@
 MACH=i386
-ABI=elf
 
 CFLAGS = -I$(MACH) -I. -Wall -Wstrict-prototypes -Wmissing-prototypes
 

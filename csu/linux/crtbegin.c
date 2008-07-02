@@ -1,5 +1,4 @@
 /*	$Id$	*/
-
 /*-
  * Copyright (c) 1998, 2001, 2002 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -32,13 +31,13 @@
 /*
  * Run-time module which handles constructors and destructors.
  */
-void __do_global_ctors_aux(void);
-void __do_global_dtors_aux(void);
+
+#include "common.h"
 
 extern void (*__CTOR_LIST__[1])(void);
 extern void (*__DTOR_LIST__[1])(void);
 
-__asm(	"	.section .ctors\n"
+asm(	"	.section .ctors\n"
 	"	.align 2\n"
 	"__CTOR_LIST__:\n"
 	"	.long -1\n"
@@ -101,10 +100,12 @@ __do_global_dtors_aux(void)
 void __call_##func(void);						\
 void __call_##func(void)						\
 {									\
-	__asm volatile (".section " #section);				\
+	asm volatile (".section " #section);				\
 	func();								\
-	__asm volatile (".previous");					\
+	asm volatile (".previous");					\
 }
 
 MD_CALL_STATIC_FUNCTION(.init, __do_global_ctors_aux)
 MD_CALL_STATIC_FUNCTION(.fini, __do_global_dtors_aux)
+
+IDENT("$Id$");

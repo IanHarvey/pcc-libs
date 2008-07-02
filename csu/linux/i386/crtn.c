@@ -15,6 +15,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include "common.h"
+
 asm(	"	.section .init			\n"
 	"	leave				\n"
 	"	ret				\n"
@@ -24,3 +26,5 @@ asm(	"	.section .fini			\n"
 	"	leave				\n"
 	"	ret				\n"
 	"	.previous			\n");
+
+IDENT("$Id$");

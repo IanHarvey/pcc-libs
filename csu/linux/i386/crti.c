@@ -15,6 +15,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include "common.h"
+
 asm(	"	.section .init		\n"
 	"	.globl _init	\n"
 	"	.align 16	\n"
@@ -30,3 +32,5 @@ asm(	"	.section .fini	\n"
 	"	push %ebp	\n"
 	"	mov %esp,%ebp	\n"
 	"	.previous	\n");
+
+IDENT("$Id$");

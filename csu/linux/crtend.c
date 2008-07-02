@@ -15,8 +15,12 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-__asm(	"	.section .ctors\n"
+#include "common.h"
+
+asm(	"	.section .ctors\n"
 	"	.long 0\n");
 
-__asm(	"	.section .dtors\n"
+asm(	"	.section .dtors\n"
 	"	.long 0\n");
+
+IDENT("$Id$");

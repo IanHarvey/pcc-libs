@@ -15,6 +15,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include "common.h"
+
 #ifdef PROFILE
 static void
 _mcleanup(void)
@@ -22,3 +24,5 @@ _mcleanup(void)
         monitor(0, 0, 0, 0, 0);
 }
 #endif
+
+IDENT("$Id$");

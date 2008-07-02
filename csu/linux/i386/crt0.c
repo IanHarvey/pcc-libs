@@ -19,7 +19,7 @@
 
 void __start(int, char **);
 
-__asm("	.text				\n"
+asm("	.text				\n"
 "	.align	4			\n"
 "	.globl	_start			\n"
 "_start:				\n"
@@ -48,3 +48,5 @@ __start(int argc, char *argv[])
 }
 
 #include "common.c"
+
+IDENT("$Id$");
