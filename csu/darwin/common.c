@@ -62,12 +62,12 @@ _helper(int init)
 	void (*func)(void);
 	void **addr;
 
-        for (i = 0; i < hdr->ncmds; i++, ptr += segp->cmdsize) {
+        for (i = 0; i < (int)hdr->ncmds; i++, ptr += segp->cmdsize) {
                 segp = (struct segment_command *)ptr;
                 if (segp->cmd != LC_SEGMENT || segp->nsects == 0)
                         continue;
                 secp = (struct section *)(segp + 1);
-                for (j = 0; j < segp->nsects; j++, secp++) {
+                for (j = 0; j < (int)segp->nsects; j++, secp++) {
                         if (init && _strcmp(secp->sectname, "__constructor") != 0)
 				continue;
 			if (!init && _strcmp(secp->sectname, "__destructor") != 0)
@@ -116,3 +116,5 @@ _dyld_fini(void)
 }
 
 #endif
+
+IDENT("$Id$");
