@@ -36,11 +36,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: fpgetmask.c,v 1.3 2002/05/12 13:12:45 bjh21 Exp $");
-#endif /* LIBC_SCCS and not lint */
-
 #include "namespace.h"
 
 #include <ieeefp.h>

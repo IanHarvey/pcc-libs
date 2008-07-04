@@ -8,11 +8,6 @@
 #include "milieu.h"
 #include "softfloat.h"
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: unordsf2.c,v 1.1 2003/05/06 08:58:20 rearnsha Exp $");
-#endif /* LIBC_SCCS and not lint */
-
 flag __unordsf2(float32, float32);
 
 flag

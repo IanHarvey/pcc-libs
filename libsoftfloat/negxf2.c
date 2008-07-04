@@ -8,11 +8,6 @@
 #include "milieu.h"
 #include "softfloat.h"
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: negxf2.c,v 1.2 2004/09/27 10:16:24 he Exp $");
-#endif /* LIBC_SCCS and not lint */
-
 #ifdef FLOATX80
 
 floatx80 __negxf2(floatx80);

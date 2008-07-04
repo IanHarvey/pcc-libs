@@ -36,11 +36,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/cdefs.h>
-#if defined(LIBC_SCCS) && !defined(lint)
-__RCSID("$NetBSD: fpgetround.c,v 1.2 2002/01/13 21:45:53 thorpej Exp $");
-#endif /* LIBC_SCCS and not lint */
-
 #include "namespace.h"
 #include "ieeefp.h"
 
