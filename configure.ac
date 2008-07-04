@@ -120,8 +120,8 @@ else
 	AC_SUBST([ENDIAN_FLAG],[-D__LITTLE_ENDIAN=1])
 fi
 
-AC_CHECK_PROG(CC, cc, cc, :)
-AC_CHECK_PROG(AR, ar, ar, :)
+AC_PROG_CC([pcc gcc cc])
+AC_CHECK_TOOL([AR], [ar], [ar])
 AC_PROG_RANLIB
 
 AC_SUBST(targos)
