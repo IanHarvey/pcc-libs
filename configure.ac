@@ -120,7 +120,7 @@ else
 	AC_SUBST([ENDIAN_FLAG],[-D__LITTLE_ENDIAN=1])
 fi
 
-AC_PROG_CC([pcc gcc cc])
+AC_CHECK_TOOLS([CC], [pcc gcc cc])
 AC_CHECK_TOOL([AR], [ar], [ar])
 AC_PROG_RANLIB
 
@@ -134,8 +134,8 @@ AC_SUBST(CPPFLAGS)
 AC_SUBST(CFLAGS)
 
 AC_CONFIG_FILES([Makefile
+		csu/Makefile
                 libsoftfloat/Makefile
 		libpcc/Makefile
 ])
 AC_OUTPUT
-

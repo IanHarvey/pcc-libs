@@ -1,0 +1,15 @@
+#	$Id$
+#
+# top-level Makefile
+#
+
+TARGOS = @targos@
+TARGMACH = @targmach@
+TARGET = @target@
+
+MFLAGS += MACH=$(TARGMACH) TARGET=$(TARGET)
+
+all clean install:
+	if test -d $(TARGOS) ; then cd $(TARGOS) && $(MAKE) $(MFLAGS) $@; fi
+
+distclean: clean
