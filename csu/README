@@ -1,14 +1,18 @@
 $Id$
 
-OS-depdendent and target-dependent:
+OS-dependent and target-dependent:
 
-crt0		startup code for programs compiled -static
-crt1		startup code for programs compiled -dynamic
-gcrt1		profiling startup code for programs compiled -dynamic
-crti		beginning of _init() and _fini() functions (inside .init section)
-crtn		end of _init() and _fini() functions (inside .fini section)
+crt0.o		startup code for programs (maybe compiled -static)
+crt1.o		startup code for programs compiled -dynamic (if necessary)
+gcrt1.o		profiling startup code for programs (maybe compiled -dynamic)
+crti.o		beginning of _init() and _fini() functions (inside .init section)
+crtn.o		end of _init() and _fini() functions (inside .fini section)
 
-OS-dependent but target-independent:
+OS-dependent dependent, but target-independent:
 
-crtbegin	support for calling global ctors/dtors
-crtend		end of the ctor/dtor lists
+crtbegin.o	support for calling global ctors/dtors
+crtend.o	end of the ctor/dtor lists
+crtbeginT.o	+ for static binary (if necessary)
+crtendT.o	+ for static binary (if necessary)
+crtbeginS.o	+ for shared library (if necessary)
+crtendS.o	+ for shared library (if necessary)
