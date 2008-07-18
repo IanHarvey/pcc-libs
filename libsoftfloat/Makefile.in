@@ -12,10 +12,10 @@ exec_prefix = @exec_prefix@
 libdir = @libdir@
 
 CC = @CC@
-TARGOS = @targos@
+TARGET = @target@
 TARGMACH = @targmach@
 VERSION = @version@
-PCCLIBDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/lib
+PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 
 CPPFLAGS += @CPPFLAGS@ -DSOFTFLOAT_FOR_GCC -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH)
 

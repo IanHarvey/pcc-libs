@@ -12,11 +12,11 @@ exec_prefix = @exec_prefix@
 libdir = @libdir@
 
 CC = @CC@
-TARGOS = @targos@
 TARGMACH = @targmach@
+TARGET = @target@
 VERSION = @version@
-PCCLIBDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/lib
-PCCINCDIR = $(libdir)/pcc/$(TARGMACH)-$(TARGOS)/$(VERSION)/include
+PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
+PCCINCDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/include
 
 CPPFLAGS += @CPPFLAGS@ -I$(top_builddir) -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH) @ENDIAN_FLAG@
 
@@ -25,7 +25,8 @@ AR = @AR@
 RANLIB = @RANLIB@
 INSTALL = @INSTALL@
 
-HEADERS +=	float.h stdarg.h stdbool.h stddef.h
+HEADERS +=	float.h stdarg.h stdbool.h stddef.h			\
+		libpcc_float.h libpcc_stdarg.h libpcc_stdbool.h libpcc_stddef.h
 
 OBJS +=		cmpdi2.o divdi3.o fixdfdi.o fixsfdi.o fixunsdfdi.o \
 		fixunssfdi.o floatdidf.o floatdisf.o floatunsdidf.o \
