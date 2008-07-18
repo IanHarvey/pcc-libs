@@ -1,5 +1,6 @@
 MACH ?=	i386
 TARGET ?= $(MACH)-linux
+VERSION ?= 0.9.9
 
 CFLAGS = -I$(MACH) -I. -Wall -Wstrict-prototypes -Wmissing-prototypes
 
@@ -29,8 +30,8 @@ crtend.o: crtend.c
 	$(CC) -O $(CFLAGS) -c -o $@ $<
 
 install:
-	mkdir -p /usr/local/lib/pcc/$(TARGET)/0.9.9/lib
-	cp $(OBJS) /usr/local/lib/pcc/$(TARGET)/0.9.9/lib
+	mkdir -p /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
+	cp $(OBJS) /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
 
 clean:
 	rm -f $(OBJS)

@@ -6,8 +6,9 @@
 TARGOS = @targos@
 TARGMACH = @targmach@
 TARGET = @target@
+VERSION = @version@
 
-MFLAGS += MACH=$(TARGMACH) TARGET=$(TARGET)
+MFLAGS += MACH=$(TARGMACH) TARGET=$(TARGET) VERSION=$(VERSION)
 
 all clean install:
 	if test -d $(TARGOS) ; then cd $(TARGOS) && $(MAKE) $(MFLAGS) $@; fi
