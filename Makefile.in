@@ -5,21 +5,15 @@
 
 VPATH = @srcdir@
 
-SUBDIR = libsoftfloat libpcc
+SUBDIR = libsoftfloat libpcc csu
 
 all: $(SUBDIR)
 
-install:
-	cd libsoftfloat && $(MAKE) install
-	cd libpcc && $(MAKE) install
-
-clean:
-	cd libsoftfloat && $(MAKE) clean
-	cd libpcc && $(MAKE) clean
+install clean:
+	for f in $(SUBDIR); do (cd $$f && $(MAKE) $@); done
 
 distclean: clean
-	cd libsoftfloat && $(MAKE) distclean
-	cd libpcc && $(MAKE) distclean
+	for f in $(SUBDIR); do (cd $$f && $(MAKE) distclean); done
 	/bin/rm -rf Makefile config.log config.status \
 		configure.lineno config.h autom4te.cache
 
