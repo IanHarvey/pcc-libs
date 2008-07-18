@@ -49,7 +49,7 @@ softfloat.o : bits64/softfloat.c
 
 install:
 	test -z "$(PCCLIBDIR)" || mkdir -p "$(PCCLIBDIR)"
-	$(INSTALL) $(DEST) $(PCCLIBDIR)
+	$(INSTALL) -m 644 $(DEST) $(PCCLIBDIR)
 
 clean:
 	/bin/rm -f $(OBJS) $(DEST)

@@ -56,7 +56,7 @@ install:
 		$(INSTALL) -m 644 $(srcdir)/include/$$i $(PCCINCDIR)/$$i; \
 	done
 	test -z "$(PCCLIBDIR)" || mkdir -p "$(PCCLIBDIR)"
-	$(INSTALL) $(DEST) $(PCCLIBDIR)
+	$(INSTALL) -m 644 $(DEST) $(PCCLIBDIR)
 
 clean:
 	/bin/rm -f $(OBJS) $(DEST)
