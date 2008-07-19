@@ -1,6 +1,7 @@
 MACH ?= powerpc
 TARGET ?= $(MACH)-darwin
 VERSION ?= 0.9.9
+PCCLIBDIR ?= /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
 
 CFLAGS = -I$(MACH) -I. -Wall -Werror -Wstrict-prototypes -Wmissing-prototypes
 
@@ -18,8 +19,8 @@ gcrt1.o: $(MACH)/crt0.c
 	$(CC) -r -nostdlib -keep_private_externs -DDYNAMIC -DPROFILE -O $(CFLAGS) -o $@ $< /usr/lib/dyld
 
 install:
-	mkdir -p /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
-	cp $(OBJS) /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
+	mkdir -p ${DESTDIR}$(PCCLIBDIR)
+	cp $(OBJS) ${DESTDIR}$(PCCLIBDIR)
 
 clean:
 	rm -f $(OBJS)
