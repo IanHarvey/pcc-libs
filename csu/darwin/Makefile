@@ -10,13 +10,13 @@ OBJS = crt0.o crt1.o gcrt1.o
 all:	$(OBJS)
 
 crt0.o:	$(MACH)/crt0.c
-	$(CC) -r -static -nostdlib -keep_private_externs -O $(CFLAGS) -o $@ $<
+	$(CC) -r -static -nostdlib -Wl,-keep_private_externs -O $(CFLAGS) -o $@ $<
 
 crt1.o:	$(MACH)/crt0.c
-	$(CC) -r -nostdlib -keep_private_externs -DDYNAMIC -O $(CFLAGS) -o $@ $< /usr/lib/dyld
+	$(CC) -r -nostdlib -Wl,-keep_private_externs -DDYNAMIC -O $(CFLAGS) -o $@ $< /usr/lib/dyld
 
 gcrt1.o: $(MACH)/crt0.c
-	$(CC) -r -nostdlib -keep_private_externs -DDYNAMIC -DPROFILE -O $(CFLAGS) -o $@ $< /usr/lib/dyld
+	$(CC) -r -nostdlib -Wl,-keep_private_externs -DDYNAMIC -DPROFILE -O $(CFLAGS) -o $@ $< /usr/lib/dyld
 
 install:
 	mkdir -p ${DESTDIR}$(PCCLIBDIR)
