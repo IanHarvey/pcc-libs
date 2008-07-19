@@ -51,12 +51,12 @@ $(DEST): $(OBJS)
 	$(CC) -O $(CPPFLAGS) $(CFLAGS) -c $<
 
 install:
-	test -z "$(PCCINCDIR)" || mkdir -p "$(PCCINCDIR)"
+	test -z "${DESTDIR}$(PCCINCDIR)" || mkdir -p "${DESTDIR}$(PCCINCDIR)"
 	headers='$(HEADERS)'; for i in $$headers; do \
-		$(INSTALL) -m 644 $(srcdir)/include/$$i $(PCCINCDIR)/$$i; \
+		$(INSTALL) -m 644 $(srcdir)/include/$$i ${DESTDIR}$(PCCINCDIR)/$$i; \
 	done
-	test -z "$(PCCLIBDIR)" || mkdir -p "$(PCCLIBDIR)"
-	$(INSTALL) -m 644 $(DEST) $(PCCLIBDIR)
+	test -z "${DESTDIR}$(PCCLIBDIR)" || mkdir -p "${DESTDIR}$(PCCLIBDIR)"
+	$(INSTALL) -m 644 $(DEST) ${DESTDIR}$(PCCLIBDIR)
 
 clean:
 	/bin/rm -f $(OBJS) $(DEST)
