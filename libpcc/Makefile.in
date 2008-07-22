@@ -50,11 +50,16 @@ $(DEST): $(OBJS)
 .c.o :
 	$(CC) -O $(CPPFLAGS) $(CFLAGS) -c $<
 
-install:
+install: install-headers install-lib
+
+install-headers:
 	test -z "${DESTDIR}$(PCCINCDIR)" || mkdir -p "${DESTDIR}$(PCCINCDIR)"
 	headers='$(HEADERS)'; for i in $$headers; do \
-		$(INSTALL) -m 644 $(srcdir)/include/$$i ${DESTDIR}$(PCCINCDIR)/$$i; \
+		$(INSTALL) -m 644 $(srcdir)/include/$$i \
+			${DESTDIR}$(PCCINCDIR)/$$i; \
 	done
+
+install-lib:
 	test -z "${DESTDIR}$(PCCLIBDIR)" || mkdir -p "${DESTDIR}$(PCCLIBDIR)"
 	$(INSTALL) -m 644 $(DEST) ${DESTDIR}$(PCCLIBDIR)
 
