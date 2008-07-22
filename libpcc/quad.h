@@ -51,7 +51,6 @@
  * with 48-bit ints.
  */
 
-#include <sys/types.h>
 #include <limits.h>
 
 #ifndef QUAD_MIN
