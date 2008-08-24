@@ -16,8 +16,7 @@ PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 CC = @CC@
 CFLAGS = @CFLAGS@
 
-MFLAGS += CC=$(CC) MACH=$(TARGMACH) TARGET=$(TARGET) VERSION=$(VERSION) \
-	PCCLIBDIR=$(PCCLIBDIR)
+MFLAGS += CC=$(CC) MACH=$(TARGMACH) PCCLIBDIR=$(PCCLIBDIR)
 
 all clean install:
 	if test -d $(TARGOS) ; then cd $(TARGOS) && $(MAKE) $(MFLAGS) $@; fi
