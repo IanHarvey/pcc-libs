@@ -18,7 +18,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __PCC__
+#if defined(__lint__)
+#define __constructor /* define away */
+#define __destructor /* define away */
+#elif defined(__PCC__)
 #define __constructor _Pragma("init")
 #define __destructor _Pragma("fini")
 #else
