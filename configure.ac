@@ -117,7 +117,7 @@ fi
 if test "X$endian" = "Xbig"; then
 	AC_SUBST([ENDIAN_FLAG],[-D__BIG_ENDIAN__=1])
 else
-	AC_SUBST([ENDIAN_FLAG],[-D__LITTLE_ENDIAN=1])
+	AC_SUBST([ENDIAN_FLAG],[-D__LITTLE_ENDIAN__=1])
 fi
 
 AC_CHECK_TOOLS([CC], [pcc gcc cc])
