@@ -18,7 +18,7 @@ VERSION = @version@
 PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 PCCINCDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/include
 
-CPPFLAGS += @CPPFLAGS@ -I$(top_builddir) -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH) @ENDIAN_FLAG@
+CPPFLAGS += @CPPFLAGS@ -I$(srcdir) @ENDIAN_FLAG@
 
 LIBS = @LIBS@
 AR = @AR@
