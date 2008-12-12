@@ -24,12 +24,19 @@
 #elif defined(__PCC__)
 #define __constructor _Pragma("init")
 #define __destructor _Pragma("fini")
-#else
+#elif defined(__GNUC__)
 #define __constructor __attribute ((constructor))
 #define __destructor __attribute ((destructor))
+#else
+#define __constructor
+#define __destructor
 #endif
 
+#ifdef __MSC__
+#define __progname "ERROR"
+#else
 extern char *__progname;
+#endif
 
 int __stack_chk_guard;
 

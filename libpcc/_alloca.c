@@ -14,6 +14,8 @@
  * an exception.  Stack-probing code prevents this.
  */
 
+#ifndef __MSC__
+
 __asm(	"	.text\n"
 	"	.globl __alloca\n"
 	"__alloca:\n"
@@ -37,3 +39,4 @@ __asm(	"	.text\n"
 #endif
 );
 
+#endif
