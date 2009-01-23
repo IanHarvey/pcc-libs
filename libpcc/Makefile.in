@@ -13,12 +13,13 @@ libdir = @libdir@
 
 CC = @CC@
 TARGMACH = @targmach@
+TARGOS = @targos@
 TARGET = @target@
 VERSION = @version@
 PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 PCCINCDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/include
 
-CPPFLAGS += @CPPFLAGS@ -I$(srcdir) @ENDIAN_FLAG@
+CPPFLAGS += @CPPFLAGS@ -I$(srcdir) @ENDIAN_FLAG@ -Dos_$(TARGOS)
 
 LIBS = @LIBS@
 AR = @AR@
