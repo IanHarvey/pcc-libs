@@ -64,8 +64,8 @@ __ssp_init(void)
 void
 __stack_chk_fail(void)
 {
-	const char msg[] = ": stack smashing attack detected\n";
+	static const char msg[] = ": stack smashing attack detected\n";
 	write(2, __progname, strlen(__progname));
-	write(2, msg, sizeof(msg));
+	write(2, msg, sizeof(msg)-1);
 	abort();
 }
