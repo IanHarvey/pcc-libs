@@ -18,11 +18,7 @@
 #include "common.h"
 
 #ifdef PROFILE
-static void
-_mcleanup(void)
-{
-        monitor(0, 0, 0, 0, 0);
-}
+asm("	.text\n_eprol:");
 #endif
 
 IDENT("$Id$");

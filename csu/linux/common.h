@@ -25,8 +25,8 @@ extern int atexit(void (*fcn)(void));
 
 #if PROFILE
 extern void monstartup(unsigned long, unsigned long);
-static void _mcleanup(void);
-extern void monitor(char *, char *, char *, int, int);
+extern void _mcleanup(void);
+extern unsigned char _etext, _eprol;
 #endif
 
 extern void _init(void);

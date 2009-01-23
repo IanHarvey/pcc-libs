@@ -5,7 +5,7 @@ PCCLIBDIR ?= /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
 
 CFLAGS = -I$(MACH) -I. -Wall -Wstrict-prototypes -Wmissing-prototypes
 
-OBJS = crt0.o crt1.o crti.o crtn.o crtbegin.o crtend.o
+OBJS = crt0.o crt1.o gcrt1.o crti.o crtn.o crtbegin.o crtend.o
 
 all:	$(OBJS)
 
@@ -16,7 +16,7 @@ crt1.o:	$(MACH)/crt0.c
 	$(CC) -O $(CFLAGS) -c -o $@ $<
 
 gcrt1.o: $(MACH)/crt0.c
-	$(CC) -O -DDYNAMIC -DPROFILE $(CFLAGS) -c -o $@ $<
+	$(CC) -O -DPROFILE $(CFLAGS) -c -o $@ $<
 
 crti.o: $(MACH)/crti.c
 	$(CC) -O $(CFLAGS) -c -o $@ $<

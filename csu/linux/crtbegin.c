@@ -34,6 +34,9 @@
 
 #include "common.h"
 
+void __do_global_dtors_aux(void);
+void __do_global_ctors_aux(void);
+
 extern void (*__CTOR_LIST__[1])(void);
 extern void (*__DTOR_LIST__[1])(void);
 
