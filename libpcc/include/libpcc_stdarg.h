@@ -1,7 +1,7 @@
-#ifndef _STDARG_H_
+#ifndef _LIBPCC_STDARG_H_
 #ifndef _ANSI_STDARG_H_
 #ifndef __need___va_list
-#define _STDARG_H_
+#define _LIBPCC_STDARG_H_
 #define _ANSI_STDARG_H_
 #endif
 #endif
