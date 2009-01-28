@@ -48,7 +48,7 @@ softfloat.o : bits64/softfloat.c
 	$(CC) -O $(CPPFLAGS) $(CFLAGS) -c $<
 
 install:
-	test -z "${DESTDIR}$(PCCLIBDIR)" || mkdir -p "$(PCCLIBDIR)"
+	test -z "${DESTDIR}$(PCCLIBDIR)" || mkdir -p "${DESTDIR}$(PCCLIBDIR)"
 	$(INSTALL) -m 644 $(DEST) ${DESTDIR}$(PCCLIBDIR)
 
 clean:
