@@ -20,7 +20,11 @@ typedef int ptrdiff_t;
 #if defined(_LIBPCC_STDDEF_H_) || defined(__need_size_t)
 #ifndef _SIZE_T
 #define _SIZE_T
-typedef unsigned int size_t;
+#ifdef __SIZE_TYPE__
+typdef __SIZE_TYPE__ size_t;
+#else
+typedef unsigned long size_t;
+#endif
 #endif
 #ifndef _OFF_T
 #define _OFF_T
