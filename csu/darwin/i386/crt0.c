@@ -112,7 +112,7 @@ asm(
 	"	.text\n"
 	"	.private_extern __dyld_func_lookup\n"
 	"__dyld_func_lookup:\n"
-	"	jmp Ldyld_func_lookup\n"
+	"	jmp *Ldyld_func_lookup\n"
 );
 
 /*
@@ -124,7 +124,7 @@ asm(
 	"	.p2align 2\n"
 	"dyld_stub_binding_helper:\n"
 	"	pushl $__mh_execute_header\n"
-	"	jmp Ldyld_lazy_binder\n"
+	"	jmp *Ldyld_lazy_binder\n"
 );
 
 /*
