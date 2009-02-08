@@ -84,12 +84,12 @@ union uu {
 /*
  * Define high and low parts of a quad_t.
  */
-#ifdef __BIGENDIAN__
+#ifdef __BIG_ENDIAN__
 #define	H		0
 #define	L		1
 #else
-#define	H		0
-#define	L		1
+#define	H		1
+#define	L		0
 #endif
 
 /*
