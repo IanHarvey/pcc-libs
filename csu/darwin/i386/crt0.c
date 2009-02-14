@@ -73,7 +73,7 @@ _start(int argc, char *argv[], char *envp[])
 	 * Initialise hooks inside libc
 	 */
 	if (mach_init_routine)
-		(void)(*mach_init_routine)();
+		(*mach_init_routine)();
 	if (_cthread_init_routine)
 		(*_cthread_init_routine)();
 
@@ -121,7 +121,6 @@ asm(
 asm(
 	"	.text\n"
 	"	.private_extern dyld_stub_binding_helper\n"
-	"	.p2align 2\n"
 	"dyld_stub_binding_helper:\n"
 	"	pushl $__mh_execute_header\n"
 	"	jmp *Ldyld_lazy_binder\n"

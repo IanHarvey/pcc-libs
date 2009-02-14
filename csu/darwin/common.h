@@ -27,8 +27,10 @@ extern int main(int argc, char *argv[], char *envp[]);
 extern void exit(int);
 extern int atexit(void (*fcn)(void));
 
+#ifdef CRT
 static char *_strrchr(char *, int);
 static int _strcmp(char *, char *);
+#endif
 
 #if PROFILE
 extern void moninit(void);

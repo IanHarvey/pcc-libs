@@ -72,7 +72,7 @@ _start(int argc, char *argv[], char *envp[])
 	 * Initialise hooks inside libc
 	 */
 	if (mach_init_routine)
-		(void)(*mach_init_routine)();
+		(*mach_init_routine)();
 	if (_cthread_init_routine)
 		(*_cthread_init_routine)();
 
