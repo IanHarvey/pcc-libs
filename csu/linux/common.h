@@ -19,7 +19,7 @@
 
 #define NULL (void *)0
 
-extern int main(int argc, char *argv[]);
+extern int main(int argc, char *argv[], char *envp[]);
 extern void exit(int);
 extern int atexit(void (*fcn)(void));
 
