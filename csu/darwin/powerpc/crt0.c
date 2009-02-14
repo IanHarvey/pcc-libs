@@ -21,8 +21,8 @@ void _start(int, char **, char **);
 
 char **environ;
 char *__progname = "";
-int _argc;
-char **_argv;
+int NXArgc;
+char **NXArgv;
 
 asm(
 #ifdef DYNAMIC
@@ -58,8 +58,8 @@ _start(int argc, char *argv[], char *envp[])
 	char *namep;
 
 	environ = envp;
-	_argc = argc;
-	_argv = argv;
+	NXArgc = argc;
+	NXArgv = argv;
 
 	if ((namep = argv[0]) != NULL) {
 		if ((__progname = _strrchr(namep, '/')) == NULL)
@@ -109,6 +109,7 @@ asm(
  */
 asm(
 	"	.text\n"
+	"	.p2align 2\n"
 	"	.private_extern __dyld_func_lookup\n"
 	"__dyld_func_lookup:\n"
 	"	lis r11,ha16(Ldyld_func_lookup)\n"
@@ -122,8 +123,8 @@ asm(
  */
 asm(
 	"	.text\n"
-	"	.private_extern dyld_stub_binding_helper\n"
 	"	.p2align 2\n"
+	"	.private_extern dyld_stub_binding_helper\n"
 	"dyld_stub_binding_helper:\n"
 	"	lis r12,ha16(Ldyld_lazy_binder)\n"
 	"	lwz r12,lo16(Ldyld_lazy_binder)(r12)\n"
@@ -144,8 +145,8 @@ asm(
 	"Ldyld_func_lookup:\n"
 	"	.long 0x8fe01008\n"
 	"	.long __mh_execute_header\n"
-	"	.long __argc\n"
-	"	.long __argv\n"
+	"	.long _NXArgc\n"
+	"	.long _NXArgv\n"
 	"	.long _environ\n"
 	"	.long ___progname\n"
 );
