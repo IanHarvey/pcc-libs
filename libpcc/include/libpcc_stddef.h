@@ -7,8 +7,9 @@
 #endif
 
 #if defined(_LIBPCC_STDDEF_H_) || defined(__need_ptrdiff_t)
-#ifndef _PTRDIFF_T
+#if !defined(_PTRDIFF_T) && !defined(__ptrdiff_t_defined)
 #define _PTRDIFF_T
+#define __ptrdiff_t_defined
 #ifdef __PTRDIFF_TYPE__
 typedef __PTRDIFF_TYPE__ ptrdiff_t;
 #else
@@ -18,16 +19,18 @@ typedef int ptrdiff_t;
 #endif
 
 #if defined(_LIBPCC_STDDEF_H_) || defined(__need_size_t)
-#ifndef _SIZE_T
+#if !defined(_SIZE_T) && !defined(__size_t_defined)
 #define _SIZE_T
+#define __size_t_defined
 #ifdef __SIZE_TYPE__
 typdef __SIZE_TYPE__ size_t;
 #else
 typedef unsigned long size_t;
 #endif
 #endif
-#ifndef _OFF_T
+#if !defined(_OFF_T) && !defined(__off_t_defined)
 #define _OFF_T
+#define __off_t_defined
 #ifdef __OFF_TYPE__
 typedef __OFF_TYPE__ off_t;
 #else
@@ -38,8 +41,9 @@ typedef long off_t;
 
 #if defined(_LIBPCC_STDDEF_H_) || defined(__need_wchar_t)
 #ifndef __cplusplus
-#ifndef _WCHAR_T
+#if !defined(_WCHAR_T) && !defined(__wchar_t_defined)
 #define _WCHAR_T
+#define __wchar_t_defined
 #ifdef __WCHAR_TYPE__
 typedef __WCHAR_TYPE__ wchar_t;
 #else
@@ -50,8 +54,9 @@ typedef unsigned short wchar_t;
 #endif
 
 #if defined(_LIBPCC_STDDEF_H_) || defined(__need_wint_t)
-#ifndef _WINT_T
+#if !defined(_WINT_T) && !defined(__wint_t_defined)
 #define _WINT_T
+#define __wint_t_defined
 #ifdef __WINT_TYPE__
 typedef __WINT_TYPE__ wint_t;
 #else
