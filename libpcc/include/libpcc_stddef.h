@@ -23,7 +23,7 @@ typedef int ptrdiff_t;
 #define _SIZE_T
 #define __size_t_defined
 #ifdef __SIZE_TYPE__
-typdef __SIZE_TYPE__ size_t;
+typedef __SIZE_TYPE__ size_t;
 #else
 typedef unsigned long size_t;
 #endif
