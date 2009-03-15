@@ -42,8 +42,7 @@
  * either x or y (the choice to compare with x or y is arbitrary).
  */
 quad_t
-__adddi3(a, b)
-	quad_t a, b;
+__adddi3(quad_t a, quad_t b)
 {
 	union uu aa, bb, sum;
 

@@ -96,8 +96,7 @@
 static quad_t __lmulq(unsigned int, unsigned int);
 
 quad_t
-__muldi3(a, b)
-	quad_t a, b;
+__muldi3(quad_t a, quad_t b)
 {
 	union uu u, v, low, prod;
 	unsigned int high, mid, udiff, vdiff;

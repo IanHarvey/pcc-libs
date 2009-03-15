@@ -16,7 +16,7 @@
 
 #ifndef __MSC__
 
-__asm(	"	.text\n"
+asm(	"	.text\n"
 	"	.globl __alloca\n"
 	"__alloca:\n"
 #ifdef __i386__

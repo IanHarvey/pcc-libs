@@ -39,8 +39,6 @@
 /*
  * Convert float to (signed) quad.
  * We clamp anything that is out of range.
- *
- * N.B.: must use new ANSI syntax (sorry).
  */
 quad_t
 __fixsfdi(float x)

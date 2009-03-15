@@ -46,8 +46,6 @@
  *
  * Not sure what to do with negative numbers---for now, anything out
  * of range becomes UQUAD_MAX.
- *
- * N.B.: must use new ANSI syntax (sorry).
  */
 u_quad_t
 __fixunssfdi(float f)

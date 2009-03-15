@@ -42,8 +42,7 @@
  * XXX	we assume a % b < 0 iff a < 0, but this is actually machine-dependent.
  */
 quad_t
-__moddi3(a, b)
-	quad_t a, b;
+__moddi3(quad_t a, quad_t b)
 {
 	u_quad_t ua, ub, ur;
 	int neg = 0;

@@ -46,8 +46,7 @@
  * of range becomes UQUAD_MAX.
  */
 u_quad_t
-__fixunsdfdi(x)
-	double x;
+__fixunsdfdi(double x)
 {
 	union uu t;
 	unsigned int tmp;
