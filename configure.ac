@@ -10,36 +10,11 @@ AC_CANONICAL_TARGET
 version=$PACKAGE_VERSION
 
 case "$target_os" in
-    netbsd*)
-	targos=netbsd
-	case "$target_cpu" in
-	    armeb) targmach=arm endian=big ;;
-	    arm*) targmach=arm ;;
-	    i?86) targmach=i386 ;;
-	    m68k*) targmach=m68k endian=big ;;
-	    mipseb) targmach=mips endian=big ;;
-	    mips*) targmach=mips ;;
-	    powerpc) targmach=powerpc endian=big ;;
-	    sparc64) targmach=sparc64 endian=big ;;
-	    vax) targmach=vax ;;
-	    pdp10) targmach=pdp10 ;;
-	esac
-	;;
 
-    openbsd*)
-	targos=openbsd
+    apple)
+	targos=apple
 	case "$target_cpu" in
-	    i?86) targmach=i386 ;;
-	    vax) targmach=vax ;;
-	    powerpc) targmach=powerpc endian=big ;;
-	    sparc64) targmach=sparc64 endian=big ;;
-	esac
-	;;
-
-    dragonfly*)
-	targos=dragonfly
-	case "$target_cpu" in
-	    i?86) targmach=i386 ;;
+	    m68k) targmach=m68k endian=big ;;
 	esac
 	;;
 
@@ -50,6 +25,13 @@ case "$target_os" in
 	    powerpc) targmach=powerpc endian=big ;;
 	esac
         ;;
+
+    dragonfly*)
+	targos=dragonfly
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	esac
+	;;
 
     freebsd*)
 	targos=freebsd
@@ -81,17 +63,44 @@ case "$target_os" in
 	esac
 	;;
 
+    netbsd*)
+	targos=netbsd
+	case "$target_cpu" in
+	    armeb) targmach=arm endian=big ;;
+	    arm*) targmach=arm ;;
+	    i?86) targmach=i386 ;;
+	    m68k*) targmach=m68k endian=big ;;
+	    mipseb) targmach=mips endian=big ;;
+	    mips*) targmach=mips ;;
+	    powerpc) targmach=powerpc endian=big ;;
+	    sparc64) targmach=sparc64 endian=big ;;
+	    vax) targmach=vax ;;
+	    pdp10) targmach=pdp10 ;;
+	esac
+	;;
+
+    openbsd*)
+	targos=openbsd
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	    vax) targmach=vax ;;
+	    powerpc) targmach=powerpc endian=big ;;
+	    sparc64) targmach=sparc64 endian=big ;;
+	esac
+	;;
+
+    sunos*|solaris*)
+	targos=sunos
+	case "$target_cpu" in
+	    i?86) targmach=i386 ;;
+	    sparc*) targmach=sparc64 endian=big ;;
+	esac
+	;;
+
     windows*|pe*)
 	target_alias=i386-pe
 	targos=win32
 	targmach=i386
-	;;
-
-    apple)
-	targos=apple
-	case "$target_cpu" in
-	    m68k) targmach=m68k endian=big ;;
-	esac
 	;;
 
     minix)

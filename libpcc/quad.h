@@ -51,7 +51,10 @@
  * with 48-bit ints.
  */
 
+#ifndef __SunOS
 #include <sys/types.h>
+#endif
+
 #include <limits.h>
 
 #ifndef QUAD_MIN
@@ -69,6 +72,10 @@ typedef long long		quad_t;
 typedef unsigned long long 	u_quad_t;
 #endif
 
+#ifdef __SunOS
+typedef long long 		quad_t;
+typedef unsigned long long 	u_quad_t;
+#endif
 
 /*
  * Depending on the desired operation, we view a `long long' (aka quad_t) in
