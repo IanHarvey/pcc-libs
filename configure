@@ -639,6 +639,7 @@ RANLIB
 targos
 targmach
 version
+libpcc_headers
 CPPFLAGS
 CFLAGS
 LIBOBJS
@@ -1917,6 +1918,7 @@ test -n "$target_alias" &&
   program_prefix=${target_alias}-
 
 version=$PACKAGE_VERSION
+libpcc_headers=undefined
 
 case "$target_os" in
 
@@ -1965,6 +1967,13 @@ case "$target_os" in
 	esac
 	;;
 
+    minix)
+	targos=minix
+	case "$target_cpu" in
+	    m68k) targmach=m68k endian=big ;;
+	esac
+	;;
+
     mirbsd*)
 	targos=mirbsd
 	case "$target_cpu" in
@@ -1974,6 +1983,7 @@ case "$target_os" in
 
     netbsd*)
 	targos=netbsd
+	libpcc_headers=
 	case "$target_cpu" in
 	    armeb) targmach=arm endian=big ;;
 	    arm*) targmach=arm ;;
@@ -1981,10 +1991,10 @@ case "$target_os" in
 	    m68k*) targmach=m68k endian=big ;;
 	    mipseb) targmach=mips endian=big ;;
 	    mips*) targmach=mips ;;
+	    pdp10) targmach=pdp10 ;;
 	    powerpc) targmach=powerpc endian=big ;;
 	    sparc64) targmach=sparc64 endian=big ;;
 	    vax) targmach=vax ;;
-	    pdp10) targmach=pdp10 ;;
 	esac
 	;;
 
@@ -2012,13 +2022,6 @@ case "$target_os" in
 	targmach=i386
 	;;
 
-    minix)
-	targos=minix
-	case "$target_cpu" in
-	    m68k) targmach=m68k endian=big ;;
-	esac
-	;;
-
     *)
         targos="$target_os"
 	case "$target_cpu" in
@@ -2040,6 +2043,10 @@ if test "X$endian" = "Xbig"; then
 else
 	ENDIAN_FLAG=-D__LITTLE_ENDIAN__=1
 
+fi
+
+if test "X$libpcc_headers" = "Xundefined"; then
+	libpcc_headers="float.h stdarg.h stdbool.h stddef.h"
 fi
 
 if test -n "$ac_tool_prefix"; then
@@ -2337,6 +2344,7 @@ esac
 else
   RANLIB="$ac_cv_prog_RANLIB"
 fi
+
 
 
 
@@ -3043,13 +3051,14 @@ RANLIB!$RANLIB$ac_delim
 targos!$targos$ac_delim
 targmach!$targmach$ac_delim
 version!$version$ac_delim
+libpcc_headers!$libpcc_headers$ac_delim
 CPPFLAGS!$CPPFLAGS$ac_delim
 CFLAGS!$CFLAGS$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 65; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 66; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
