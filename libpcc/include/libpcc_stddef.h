@@ -19,8 +19,9 @@ typedef int ptrdiff_t;
 #endif
 
 #if defined(_LIBPCC_STDDEF_H_) || defined(__need_size_t)
-#if !defined(_SIZE_T) && !defined(__size_t_defined)
+#if !defined(_SIZE_T) && !defined(__size_t_defined) && !defined(_SIZE_T_)
 #define _SIZE_T
+#define _SIZE_T_
 #define __size_t_defined
 #ifdef __SIZE_TYPE__
 typedef __SIZE_TYPE__ size_t;
@@ -28,8 +29,9 @@ typedef __SIZE_TYPE__ size_t;
 typedef unsigned long size_t;
 #endif
 #endif
-#if !defined(_OFF_T) && !defined(__off_t_defined)
+#if !defined(_OFF_T) && !defined(__off_t_defined) && !defined(_OFF_T_)
 #define _OFF_T
+#define _OFF_T_
 #define __off_t_defined
 #ifdef __OFF_TYPE__
 typedef __OFF_TYPE__ off_t;
