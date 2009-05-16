@@ -6,9 +6,11 @@
 #define _ANSI_STDARG_H_
 #endif
 
+#if defined(_LIBPCC_STDARG_H_) || defined(__need___va_list)
 #ifndef _VA_LIST
 typedef char * va_list;
 #define _VA_LIST
+#endif
 #endif
 
 #ifdef _LIBPCC_STDARG_H_
@@ -21,6 +23,7 @@ typedef char * va_list;
 /* For broken glibc headers */
 #ifndef __GNUC_VA_LIST
 #define __gnuc_va_list void *
+#define __GNUC_VA_LIST
 #endif
 
 #endif

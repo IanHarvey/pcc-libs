@@ -1,6 +1,6 @@
 #	$Id$
 #
-# Makefile.in for libpccsoftfloat.a
+# Makefile.in for libpcc.a
 #
 
 VPATH = @srcdir@

@@ -36,6 +36,7 @@ case "$target_os" in
 
     freebsd*)
 	targos=freebsd
+	libpcc_headers=
 	case "$target_cpu" in
 	    i386) targmach=i386 ;;
 	esac
