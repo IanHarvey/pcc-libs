@@ -8,7 +8,6 @@ AC_PROG_INSTALL
 AC_CANONICAL_TARGET
 
 version=$PACKAGE_VERSION
-libpcc_headers=undefined
 
 case "$target_os" in
 
@@ -36,7 +35,6 @@ case "$target_os" in
 
     freebsd*)
 	targos=freebsd
-	libpcc_headers=
 	case "$target_cpu" in
 	    i386) targmach=i386 ;;
 	esac
@@ -74,7 +72,6 @@ case "$target_os" in
 
     netbsd*)
 	targos=netbsd
-	libpcc_headers=
 	case "$target_cpu" in
 	    armeb) targmach=arm endian=big ;;
 	    arm*) targmach=arm ;;
@@ -132,10 +129,6 @@ else
 	AC_SUBST([ENDIAN_FLAG],[-D__LITTLE_ENDIAN__=1])
 fi
 
-if test "X$libpcc_headers" = "Xundefined"; then
-	libpcc_headers="float.h stdarg.h stdbool.h stddef.h"
-fi
-
 AC_CHECK_TOOLS([CC], [pcc gcc cc])
 AC_CHECK_TOOL([AR], [ar], [ar])
 AC_PROG_RANLIB
@@ -146,7 +139,6 @@ AC_SUBST(version)
 AC_SUBST(prefix)
 AC_SUBST(libdir)
 AC_SUBST(includedir)
-AC_SUBST(libpcc_headers)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(CFLAGS)
 

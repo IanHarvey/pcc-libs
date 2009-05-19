@@ -19,7 +19,6 @@ VERSION = @version@
 PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 PCCINCDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/include
 
-HEADERS += @libpcc_headers@
 CPPFLAGS += @CPPFLAGS@ -I$(srcdir) @ENDIAN_FLAG@ -Dos_$(TARGOS)
 
 LIBS = @LIBS@
@@ -27,7 +26,8 @@ AR = @AR@
 RANLIB = @RANLIB@
 INSTALL = @INSTALL@
 
-HEADERS +=	libpcc_float.h libpcc_stdarg.h libpcc_stdbool.h libpcc_stddef.h
+HEADERS +=	float.h stdarg.h stdbool.h stddef.h \
+		libpcc_float.h libpcc_stdarg.h libpcc_stdbool.h libpcc_stddef.h
 
 OBJS +=		cmpdi2.o divdi3.o fixdfdi.o fixsfdi.o fixunsdfdi.o \
 		fixunssfdi.o floatdidf.o floatdisf.o floatunsdidf.o \
