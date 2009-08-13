@@ -2,8 +2,9 @@ MACH ?= powerpc
 TARGET ?= $(MACH)-darwin
 VERSION ?= 0.9.9
 PCCLIBDIR ?= /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
+SRCDIR ?= .
 
-CFLAGS = -I$(MACH) -I. -Wall -Werror -Wstrict-prototypes -Wmissing-prototypes
+CFLAGS = -I$(SRCDIR)$(MACH) -I$(SRCDIR) -Wall -Werror -Wstrict-prototypes -Wmissing-prototypes
 
 OBJS = crt0.o crt1.o gcrt1.o dylib1.o
 

@@ -6,6 +6,7 @@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 libdir = @libdir@
+srcdir = @srcdir@
 
 TARGOS = @targos@
 TARGMACH = @targmach@
@@ -16,10 +17,10 @@ PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 CC = @CC@
 CFLAGS = @CFLAGS@
 
-MFLAGS += CC=$(CC) MACH=$(TARGMACH) PCCLIBDIR=$(PCCLIBDIR)
+MFLAGS += CC=$(CC) MACH=$(TARGMACH) PCCLIBDIR=$(PCCLIBDIR) VPATH=$(srcdir)/$(TARGOS) SRCDIR=$(srcdir)/$(TARGOS)/
 
 all clean install:
-	if test -d $(TARGOS) ; then cd $(TARGOS) && $(MAKE) $(MFLAGS) $@; fi
+	$(MAKE) -f $(srcdir)/$(TARGOS)/Makefile $(MFLAGS) $@
 
 distclean: clean
 	/bin/rm -f Makefile

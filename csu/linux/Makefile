@@ -2,8 +2,9 @@ MACH ?=	i386
 TARGET ?= $(MACH)-linux
 VERSION ?= 0.9.9
 PCCLIBDIR ?= /usr/local/lib/pcc/$(TARGET)/$(VERSION)/lib
+SRCDIR ?= .
 
-CFLAGS = -I$(MACH) -I. -Wall -Wstrict-prototypes -Wmissing-prototypes
+CFLAGS = -I$(SRCDIR)/$(MACH) -I$(SRCDIR) -Wall -Wstrict-prototypes -Wmissing-prototypes
 
 OBJS = crt0.o crt1.o gcrt1.o crti.o crtn.o crtbegin.o crtend.o
 
