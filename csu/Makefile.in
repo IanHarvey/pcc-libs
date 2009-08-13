@@ -20,7 +20,7 @@ CFLAGS = @CFLAGS@
 MFLAGS += CC=$(CC) MACH=$(TARGMACH) PCCLIBDIR=$(PCCLIBDIR) VPATH=$(srcdir)/$(TARGOS) SRCDIR=$(srcdir)/$(TARGOS)/
 
 all clean install:
-	$(MAKE) -f $(srcdir)/$(TARGOS)/Makefile $(MFLAGS) $@
+	if test -e $(srcdir)/$(TARGOS)/Makefile ; then $(MAKE) -f $(srcdir)/$(TARGOS)/Makefile $(MFLAGS) $@ ; fi
 
 distclean: clean
 	/bin/rm -f Makefile
