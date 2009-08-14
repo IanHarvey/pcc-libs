@@ -37,18 +37,10 @@
 void __do_global_dtors_aux(void);
 void __do_global_ctors_aux(void);
 
-extern void (*__CTOR_LIST__[1])(void);
-extern void (*__DTOR_LIST__[1])(void);
-
-asm(	"	.section .ctors\n"
-	"	.align 2\n"
-	"__CTOR_LIST__:\n"
-	"	.long -1\n"
-	"	.section .dtors\n"
-	"	.align 2\n"
-	"__DTOR_LIST__:\n"
-	"	.long -1\n"
-);
+static void (*__CTOR_LIST__[1])(void)
+	__attribute__((section(".ctors"))) = { (void *)-1 };
+static void (*__DTOR_LIST__[1])(void)
+	__attribute__((section(".dtors"))) = { (void *)-1 };
 
 static void
 __ctors(void)
