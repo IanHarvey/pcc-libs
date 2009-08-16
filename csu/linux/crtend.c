@@ -18,9 +18,19 @@
 #include "common.h"
 
 asm(	"	.section .ctors\n"
-	"	.long 0\n");
+#ifdef __x86_64__
+	"	.quad 0\n"
+#else
+	"	.long 0\n"
+#endif
+);
 
 asm(	"	.section .dtors\n"
-	"	.long 0\n");
+#ifdef __x86_64__
+	"	.quad 0\n"
+#else
+	"	.long 0\n"
+#endif
+);
 
 IDENT("$Id$");
