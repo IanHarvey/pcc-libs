@@ -27,7 +27,8 @@ RANLIB = @RANLIB@
 INSTALL = @INSTALL@
 
 HEADERS +=	float.h stdarg.h stdbool.h stddef.h \
-		libpcc_float.h libpcc_stdarg.h libpcc_stdbool.h libpcc_stddef.h
+		libpcc_float.h libpcc_limits.h libpcc_stdarg.h \
+		libpcc_stdbool.h libpcc_stddef.h
 
 OBJS +=		cmpdi2.o divdi3.o fixdfdi.o fixsfdi.o fixunsdfdi.o \
 		fixunssfdi.o floatdidf.o floatdisf.o floatunsdidf.o \
