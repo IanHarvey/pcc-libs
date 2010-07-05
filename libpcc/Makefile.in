@@ -26,7 +26,7 @@ AR = @AR@
 RANLIB = @RANLIB@
 INSTALL = @INSTALL@
 
-HEADERS +=	float.h stdarg.h stdbool.h stddef.h \
+HEADERS +=	float.h limits.h stdarg.h stdbool.h stddef.h \
 		libpcc_float.h libpcc_limits.h libpcc_stdarg.h \
 		libpcc_stdbool.h libpcc_stddef.h
 
