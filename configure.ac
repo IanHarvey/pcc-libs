@@ -37,6 +37,7 @@ case "$target_os" in
 	targos=freebsd
 	case "$target_cpu" in
 	    i386) targmach=i386 ;;
+	    x86_64) targmach=amd64 ;;
 	esac
 	;;
 
