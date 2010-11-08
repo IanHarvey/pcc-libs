@@ -12,5 +12,20 @@
 
 #endif
 
+/*
+ * The following limits are sometimes considered
+ * a property of the compiler. Not complete.
+ */
+
+/* pdp10 needs special handling */
+#ifndef CHAR_BIT
+#define CHAR_BIT 8
+#endif
+
+#ifndef UINT_MAX
+#define UINT_MAX 4294967295U
+#endif
+
+
 #endif
 
