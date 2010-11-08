@@ -8,13 +8,13 @@
 
 #if defined(_LIBPCC_STDARG_H_) || defined(__need___va_list)
 #ifndef _VA_LIST
-typedef char * va_list;
+typedef __builtin_va_list va_list;
 #define _VA_LIST
 #define _VA_LIST_DEFINED
 #endif
 /* For broken glibc headers */
 #ifndef __GNUC_VA_LIST
-#define __gnuc_va_list void *
+#define __gnuc_va_list __builtin_va_list
 #define __GNUC_VA_LIST
 #endif
 
