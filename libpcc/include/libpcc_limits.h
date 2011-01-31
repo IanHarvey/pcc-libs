@@ -17,15 +17,51 @@
  * a property of the compiler. Not complete.
  */
 
-/* pdp10 needs special handling */
-#ifndef CHAR_BIT
+#undef CHAR_BIT
+#ifdef __pdp10__
+#define CHAR_BIT 9
+#else
 #define CHAR_BIT 8
 #endif
 
-#ifndef UINT_MAX
-#define UINT_MAX 4294967295U
-#endif
+/*
+ * Logic below assumes 2-complement.
+ */
 
+#undef SCHAR_MAX
+#define	SCHAR_MAX __SCHAR_MAX__
+#undef SCHAR_MIN
+#define SCHAR_MIN (-SCHAR_MAX-1)
+#undef UCHAR_MAX
+#define UCHAR_MAX (2*SCHAR_MAX+1)
+
+#undef SHRT_MAX
+#define SHRT_MAX __SHRT_MAX__
+#undef SHRT_MIN
+#define SHRT_MIN (-SHRT_MAX-1)
+#undef USHRT_MAX
+#define USHRT_MAX (2*SHRT_MAX+1)
+
+#undef INT_MAX
+#define INT_MAX __INT_MAX__
+#undef INT_MIN
+#define INT_MIN (-INT_MAX-1)
+#undef UINT_MAX
+#define UINT_MAX (2U*INT_MAX+1U)
+
+#undef LONG_MAX
+#define LONG_MAX __LONG_MAX__
+#undef LONG_MIN
+#define LONG_MIN (-LONG_MAX-1L)
+#undef ULONG_MAX
+#define ULONG_MAX (2UL*LONG_MAX+1UL)
+
+#undef LLONG_MAX
+#define LLONG_MAX __LONG_LONG_MAX__
+#undef LLONG_MIN
+#define LLONG_MIN (-LLONG_MAX-1LL)
+#undef ULLONG_MAX
+#define ULLONG_MAX (2ULL*LLONG_MAX+1ULL)
 
 #endif
 
