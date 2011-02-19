@@ -27,6 +27,15 @@
 /*
  * Logic below assumes 2-complement.
  */
+#undef CHAR_MIN
+#undef CHAR_MAX
+#ifdef __CHAR_UNSIGNED__
+#define	CHAR_MIN 0
+#define	CHAR_MAX UCHAR_MAX
+#else
+#define	CHAR_MIN SCHAR_MIN
+#define	CHAR_MAX SCHAR_MAX
+#endif
 
 #undef SCHAR_MAX
 #define	SCHAR_MAX __SCHAR_MAX__
