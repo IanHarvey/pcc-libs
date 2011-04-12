@@ -17,7 +17,7 @@
 
 #include "common.h"
 
-asm(	"	.section .ctors\n"
+asm(	"	.section .ctors,\"aw\",@progbits\n"
 #ifdef __x86_64__
 	"	.quad 0\n"
 #else
@@ -25,7 +25,7 @@ asm(	"	.section .ctors\n"
 #endif
 );
 
-asm(	"	.section .dtors\n"
+asm(	"	.section .dtors,\"aw\",@progbits\n"
 #ifdef __x86_64__
 	"	.quad 0\n"
 #else

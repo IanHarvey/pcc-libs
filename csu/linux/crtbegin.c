@@ -40,16 +40,16 @@ void __do_global_dtors_aux(void);
 extern void (*__CTOR_LIST__[1])(void);
 extern void (*__DTOR_LIST__[1])(void);
 
-asm(	"	.section .ctors\n"
-	"	.align 2\n"
+asm(	"	.section .ctors,\"aw\",@progbits\n"
+	"	.align 4\n"
 	"__CTOR_LIST__:\n"
 #ifdef __x86_64__
 	"	.quad -1\n"
 #else
 	"	.long -1\n"
 #endif
-	"	.section .dtors\n"
-	"	.align 2\n"
+	"	.section .dtors,\"aw\",@progbits\n"
+	"	.align 4\n"
 	"__DTOR_LIST__:\n"
 #ifdef __x86_64__
 	"	.quad -1\n"
