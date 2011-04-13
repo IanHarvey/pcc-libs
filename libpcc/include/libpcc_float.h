@@ -1,6 +1,12 @@
 #ifndef _LIBPCC_FLOAT_H_
 #define _LIBPCC_FLOAT_H_
 
+/*
+ * number of decimal digits needed to represent all the
+ * significant digits for all internal floating-point formats
+ */
+#define DECIMAL_DIG 21
+
 #define FLT_RADIX 2
 
 /* IEEE float */
