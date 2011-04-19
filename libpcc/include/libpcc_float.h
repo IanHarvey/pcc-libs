@@ -7,6 +7,15 @@
  */
 #define DECIMAL_DIG 21
 
+/*
+ * the floating-point expression evaluation method:
+ *	-1	indeterminate
+ *	0	evaluate to range and precision of type
+ *	1	evaluate to range and precision of double type
+ *	2	evaluate to range and precision of long double type
+ */
+#define FLT_EVAL_METHOD 0
+
 #define FLT_RADIX 2
 
 /* IEEE float */
