@@ -38,7 +38,7 @@ OBJS +=		cmpdi2.o divdi3.o fixdfdi.o fixsfdi.o fixunsdfdi.o \
 
 OBJS +=		ashldi3.o ashrdi3.o lshrdi3.o bitcnt.o
 
-OBJS +=		_alloca.o
+OBJS +=		_alloca.o unwind.o
 
 OBJS +=		ssp.o
 
