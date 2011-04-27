@@ -28,6 +28,6 @@ CHAR =	s_cat.o s_cmp.o s_copy.o
 libF77.a : $(MISC) $(POW) $(CX) $(DCX) $(REAL) $(DBL) $(INT) $(HALF) $(CMP) $(CHAR) cabs.o
 	ar r libF77.a $?
 
-clean:
+clean distclean:
 	rm -f $(MISC) $(POW) $(CX) $(DCX) $(REAL) $(DBL) $(INT) $(HALF) \
 		$(CMP) $(CHAR) cabs.o libF77.a

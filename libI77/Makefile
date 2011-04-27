@@ -16,5 +16,5 @@ OBJS= backspace.o dfe.o due.o iio.o inquire.o lib.o rewind.o rsfe.o rdfmt.o \
 libI77.a: $(OBJS)
 	ar r libI77.a $?
 
-clean:
+clean distclean:
 	/bin/rm -f $(OBJS) libI77.a

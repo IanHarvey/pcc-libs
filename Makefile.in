@@ -5,19 +5,25 @@
 
 VPATH = @srcdir@
 
-SUBDIR = libsoftfloat libpcc csu
+ALL_SUBDIRS=	libsoftfloat libpcc csu
+DIST_SUBDIRS=	$(ALL_SUBDIRS) libF77 libI77
 
-all: $(SUBDIR)
-
-install clean:
-	for f in $(SUBDIR); do (cd $$f && $(MAKE) $@); done
+all install clean:
+	@for subdir in $(ALL_SUBDIRS); do \
+		_nextdir_=$${_thisdir_+$$_thisdir_/}$$subdir; \
+		echo "===> $$_nextdir_"; \
+		(_thisdir_=$$_nextdir_; export _thisdir_; cd $$subdir && \
+		    exec $(MAKE) $(MFLAGS) $@) || exit $$?; \
+		echo "<=== $$_nextdir_"; \
+	done
 
 distclean: clean
-	for f in $(SUBDIR); do (cd $$f && $(MAKE) distclean); done
+	@for subdir in $(DIST_SUBDIRS); do \
+		_nextdir_=$${_thisdir_+$$_thisdir_/}$$subdir; \
+		echo "===> $$_nextdir_"; \
+		(_thisdir_=$$_nextdir_; export _thisdir_; cd $$subdir && \
+		    exec $(MAKE) $(MFLAGS) $@) || exit $$?; \
+		echo "<=== $$_nextdir_"; \
+	done
 	/bin/rm -rf Makefile config.log config.status \
 		configure.lineno config.h autom4te.cache
-
-$(SUBDIR): nonexistant
-	cd $@; $(MAKE) all $(MFLAGS)
-
-nonexistant:

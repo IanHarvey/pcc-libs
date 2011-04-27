@@ -18,6 +18,7 @@ VERSION = @version@
 PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 
 CPPFLAGS += @CPPFLAGS@ -DSOFTFLOAT_FOR_GCC -I$(srcdir) -I$(srcdir)/arch/$(TARGMACH)
+CPPFLAGS += -isystem $(top_srcdir)/libpcc/include
 
 LIBS = @LIBS@
 AR = @AR@
