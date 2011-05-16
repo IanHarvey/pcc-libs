@@ -18,7 +18,10 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifndef __MSC__
 #include <unistd.h>
+#endif
 
 #if defined(__lint__)
 #define __constructor /* define away */
