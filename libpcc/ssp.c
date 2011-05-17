@@ -19,7 +19,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef __MSC__
+#ifdef __MSC__
+#include <io.h>
+#define open(f,m) _open(f,m)
+#define read(h,b,n) _read(h,b,n)
+#define write(h,b,n) _write(h,b,n)
+#define close(h) _close(h)
+#else
 #include <unistd.h>
 #endif
 
