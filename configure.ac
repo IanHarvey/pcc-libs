@@ -23,8 +23,9 @@ case "$target_os" in
 	case "$target_cpu" in
 	    i?86) targmach=i386 ;;
 	    powerpc) targmach=powerpc endian=big ;;
+	    x86_64) targmach=amd64 ;;
 	esac
-        ;;
+	;;
 
     dragonfly*)
 	targos=dragonfly
@@ -113,7 +114,7 @@ case "$target_os" in
 	;;
 
     *)
-        targos="$target_os"
+	targos="$target_os"
 	case "$target_cpu" in
 	    m16c) targmach=m16c ;;
 	    nova) targmach=nova ;;
@@ -145,8 +146,8 @@ AC_SUBST(CPPFLAGS)
 AC_SUBST(CFLAGS)
 
 AC_CONFIG_FILES([Makefile
-		csu/Makefile
-                libsoftfloat/Makefile
-		libpcc/Makefile
+	csu/Makefile
+	libsoftfloat/Makefile
+	libpcc/Makefile
 ])
 AC_OUTPUT

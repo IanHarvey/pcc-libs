@@ -2,6 +2,7 @@
 #include <inttypes.h>
 
 struct _Unwind_Context;
+struct _Unwind_Exception;
 
 typedef unsigned int _Unwind_Ptr;
 typedef unsigned int _Unwind_Word;

@@ -17,7 +17,7 @@
 
 #if defined(__ppc__)
 #define IDENT(x) asm(".cstring\n\t.ascii \"" x "\\0\"")
-#elif defined(__i386__)
+#elif defined(__i386__) || defined(__x86_64__)
 #define IDENT(x) asm(".cstring\n\t.ascii \"" x "\\0\"")
 #endif
 

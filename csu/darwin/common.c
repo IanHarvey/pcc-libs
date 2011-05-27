@@ -57,16 +57,29 @@ _helper(int init)
 	struct mach_header *hdr = &_mh_execute_header;
 	char *ptr = (char *)(hdr + 1);
 	int i, j, n;
-	struct segment_command *segp;
-	struct section *secp;
+#ifdef __LP64__
+	struct segment_command_64 *segp;
+	struct section_64 *secp;
+#else
+	struct segment_command_32 *segp;
+	struct section_32 *secp;
+#endif
 	void (*func)(void);
 	void **addr;
 
         for (i = 0; i < (int)hdr->ncmds; i++, ptr += segp->cmdsize) {
-                segp = (struct segment_command *)ptr;
+#ifdef __LP64__
+                segp = (struct segment_command_64 *)ptr;
+#else
+                segp = (struct segment_command_32 *)ptr;
+#endif
                 if (segp->cmd != LC_SEGMENT || segp->nsects == 0)
                         continue;
-                secp = (struct section *)(segp + 1);
+#ifdef __LP64__
+                secp = (struct section_64 *)(segp + 1);
+#else
+                secp = (struct section_32 *)(segp + 1);
+#endif
                 for (j = 0; j < (int)segp->nsects; j++, secp++) {
                         if (init && _strcmp(secp->sectname, "__constructor") != 0)
 				continue;
