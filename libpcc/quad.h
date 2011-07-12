@@ -91,7 +91,7 @@ union uu {
 /*
  * Define high and low parts of a quad_t.
  */
-#ifdef __BIG_ENDIAN__
+#ifdef TARGET_BIG_ENDIAN
 #define	H		0
 #define	L		1
 #else

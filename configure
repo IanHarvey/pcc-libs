@@ -2038,10 +2038,10 @@ echo "$as_me: error: '$target' is not (yet) supported by pcc-libs." >&2;}
 fi
 
 if test "X$endian" = "Xbig"; then
-	ENDIAN_FLAG=-D__BIG_ENDIAN__=1
+	ENDIAN_FLAG=-DTARGET_BIG_ENDIAN=1
 
 else
-	ENDIAN_FLAG=-D__LITTLE_ENDIAN__=1
+	ENDIAN_FLAG=-DTARGET_LITTLE_ENDIAN=1
 
 fi
 

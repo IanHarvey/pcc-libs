@@ -127,9 +127,9 @@ if test "X$targos" = X -o "X$targmach" = X; then
 fi
 
 if test "X$endian" = "Xbig"; then
-	AC_SUBST([ENDIAN_FLAG],[-D__BIG_ENDIAN__=1])
+	AC_SUBST([ENDIAN_FLAG],[-DTARGET_BIG_ENDIAN=1])
 else
-	AC_SUBST([ENDIAN_FLAG],[-D__LITTLE_ENDIAN__=1])
+	AC_SUBST([ENDIAN_FLAG],[-DTARGET_LITTLE_ENDIAN=1])
 fi
 
 AC_CHECK_TOOLS([CC], [pcc gcc cc])
