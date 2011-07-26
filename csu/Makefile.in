@@ -22,8 +22,6 @@ CFLAGS = @CFLAGS@
 MFLAGS += CC="$(CC)"
 MFLAGS += MACH="$(TARGMACH)"
 MFLAGS += PCCLIBDIR="$(PCCLIBDIR)"
-MFLAGS += VPATH="$(srcdir)/$(TARGOS)"
-MFLAGS += SRCDIR="$(srcdir)/$(TARGOS)/"
 
 all clean install:
 	if test -f $(srcdir)/$(TARGOS)/Makefile; then			\
