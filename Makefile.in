@@ -3,7 +3,7 @@
 # top-level Makefile
 #
 
-VPATH = @srcdir@
+@SET_MAKE@
 
 ALL_SUBDIRS=	libsoftfloat libpcc csu
 DIST_SUBDIRS=	$(ALL_SUBDIRS) libF77 libI77
