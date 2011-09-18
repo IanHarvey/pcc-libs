@@ -70,6 +70,66 @@ _Unwind_GetCFA(struct _Unwind_Context * context)
 }
 
 _Unwind_Reason_Code
+_Unwind_RaiseException(struct _Unwind_Exception *object)
+{
+	abort();
+	return 0;
+}
+
+_Unwind_Reason_Code
+_Unwind_Resume_or_Rethrow(struct _Unwind_Exception *object)
+{
+	abort();
+	return 0;
+}
+
+void
+_Unwind_DeleteException (struct _Unwind_Exception *object)
+{
+	abort();
+}
+
+void
+_Unwind_SetIP(struct _Unwind_Context *context, _Unwind_Ptr val)
+{
+	abort();
+}
+
+void
+_Unwind_SetGR(struct _Unwind_Context *context, int index, _Unwind_Word val) 
+{
+	abort();
+}
+
+void *
+_Unwind_GetLanguageSpecificData(struct _Unwind_Context *context)
+{
+	abort();
+	return 0;
+}
+
+_Unwind_Ptr
+_Unwind_GetRegionStart(struct _Unwind_Context *context)
+{
+	abort();
+	return 0;
+}
+
+_Unwind_Ptr
+_Unwind_GetDataRelBase(struct _Unwind_Context *context)
+{
+	abort();
+	return 0;
+}
+
+_Unwind_Ptr
+_Unwind_GetTextRelBase(struct _Unwind_Context *context)
+{
+	abort();
+	return 0;
+}
+
+_Unwind_Reason_Code
 __gcc_personality_v0(int version, _Unwind_Action actions, uint64_t exceptionClass, struct _Unwind_Exception *exceptionObject, struct _Unwind_Context *context)
 {
 	abort();
