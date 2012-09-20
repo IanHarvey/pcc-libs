@@ -29,9 +29,9 @@ asm("	.text				\n"
 "	movq (%rsp),%rdi		\n"
 "	leaq 16(%rsp,%rdi,8),%rdx	\n"
 "	leaq 8(%rsp),%rsi		\n"
-"	subq $16,%rsp			\n"
 "	andq $-16,%rsp			\n"
-"	jmp __start			\n");
+"	callq __start			\n");
+	/* cannot return */
 
 void
 __start(int argc, char *argv[], char *envp[])
