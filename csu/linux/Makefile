@@ -6,7 +6,8 @@ SRCDIR ?= .
 
 CFLAGS = -I$(SRCDIR)/$(MACH) -I$(SRCDIR) -Wall -Wstrict-prototypes -Wmissing-prototypes
 
-OBJS = crt0.o crt1.o gcrt1.o crti.o crtn.o crtbegin.o crtend.o
+OBJS = crt0.o crt1.o gcrt1.o crti.o crtn.o crtbegin.o crtend.o \
+	crtbeginS.o crtendS.o
 
 all:	$(OBJS)
 
@@ -30,6 +31,12 @@ crtbegin.o: crtbegin.c
 
 crtend.o: crtend.c
 	$(CC) -O $(CFLAGS) -c -o $@ $<
+
+crtbeginS.o: crtbegin.c
+	$(CC) -O $(CFLAGS) -fpic -c -o $@ $<
+
+crtendS.o: crtend.c
+	$(CC) -O $(CFLAGS) -fpic -c -o $@ $<
 
 install:
 	mkdir -p ${DESTDIR}$(PCCLIBDIR)
