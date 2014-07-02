@@ -91,7 +91,7 @@ pcc_scalbnf(float x, int exp)
 }
 
 float _Complex
-_divsc3(float ax, float bx, float cx, float dx)
+__divsc3(float ax, float bx, float cx, float dx)
 {
 	float denom;
 	union uf ua, ub, uc, ud, ur, ulogbw, ux, uy;
@@ -153,7 +153,7 @@ _divsc3(float ax, float bx, float cx, float dx)
 }
 
 float _Complex
-_mulsc3(float fa, float fb, float fc, float fd)
+__mulsc3(float fa, float fb, float fc, float fd)
 {
 	union uf ua, ub, uc, ud, ux, uy, uac, ubd, uad, ubc;
 
@@ -277,7 +277,7 @@ pcc_scalbn(double x, int exp)
 }
 
 double _Complex
-_divdc3(double ax, double bx, double cx, double dx)
+__divdc3(double ax, double bx, double cx, double dx)
 {
 	double denom;
 	union ud ua, ub, uc, ud, ur, ulogbw, ux, uy;
@@ -297,8 +297,8 @@ _divdc3(double ax, double bx, double cx, double dx)
 		ur.dih = uci;
 		ur.dil = uc.dil;
 	} else {
-		ur.dih = uci;
-		ur.dil = uc.dil;
+		ur.dih = udi;
+		ur.dil = ud.dil;
 	}
 
 	/* logbf */
@@ -345,7 +345,7 @@ _divdc3(double ax, double bx, double cx, double dx)
 }
 
 double _Complex
-_muldc3(double fa, double fb, double fc, double fd)
+__muldc3(double fa, double fb, double fc, double fd)
 {
 	union ud ua, ub, uc, ud, ux, uy, uac, ubd, uad, ubc;
 
@@ -434,6 +434,7 @@ union ul {
 #define	LDBL_MANT	0x0U
 #define	LDBL_MANTEXP	(LDBL_EXP|LDBL_MANT)
 #define	LDBL_INF	LDBL_EXP
+#define	LDBL_HIDDEN	0x80000000U
 #else
 #error FIXME long double
 #endif
@@ -469,22 +470,25 @@ pcc_scalbnl(long double x, int exp)
 	z1.dil3 = z2.dil3 = 0;
 	if (exp <= 0) {
 		z2.dlh = (16383 - 130);
+		z2.dil1 = LDBL_HIDDEN;
 		x *= z2.f;
 		exp += 130;
 		if (exp < 0) exp = 0;
 	} else if (exp > 32766) {
 		z2.dlh = (16384 + 65);
+		z2.dil1 = LDBL_HIDDEN;
 		x *= z2.f;
 		exp -= 65;
 		if (exp > 32766) exp = 32766;
 	}
 	z1.dlh = exp;
+	z1.dil1 = LDBL_HIDDEN;
 	x *= z1.f;
 	return x;
 }
 
 long double _Complex
-_divxc3(long double ax, long double bx, long double cx, long double dx)
+__divxc3(long double ax, long double bx, long double cx, long double dx)
 {
 	long double denom;
 	union ul ua, ub, uc, ud, ur, ulogbw, ux, uy, *urp;
@@ -558,7 +562,7 @@ _divxc3(long double ax, long double bx, long double cx, long double dx)
 }
 
 long double _Complex
-_mulxc3(long double fa, long double fb, long double fc, long double fd)
+__mulxc3(long double fa, long double fb, long double fc, long double fd)
 {
 	union ul ua, ub, uc, ud, ux, uy, uac, ubd, uad, ubc;
 
