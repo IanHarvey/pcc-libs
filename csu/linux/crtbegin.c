@@ -84,6 +84,7 @@ __dtors(void)
 		(**p++)();
 }
 
+__attribute__((__visibility__("hidden"), __noinline__))
 void
 __do_global_ctors_aux(void)
 {
@@ -95,6 +96,7 @@ __do_global_ctors_aux(void)
 	}
 }
 
+__attribute__((__visibility__("hidden"), __noinline__))
 void
 __do_global_dtors_aux(void)
 {
