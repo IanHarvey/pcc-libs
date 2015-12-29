@@ -428,7 +428,7 @@ union ul {
 #define	dlh	i[3]
 #endif
 
-#if defined(mach_amd64) || defined(mach_i386)
+#if defined(mach_amd64) || defined(mach_i386) || defined(mach_mips)
 #define	LDBL_SIGN	0x8000U
 #define	LDBL_EXP	0x7fffU
 #define	LDBL_MANT	0x0U
