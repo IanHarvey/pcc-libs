@@ -2022,7 +2022,7 @@ case "$target_os" in
     minix*)
 	targos=minix
 	case "$target_os" in
-	    minix3) CPPFLAGS='${CPPFLAG}S -DSOFTFLOAT_NEED_FIXUNS' ;;
+	    minix3) CPPFLAGS='${CPPFLAGS} -DSOFTFLOAT_NEED_FIXUNS' ;;
 	    minix3.*) ;;
 	esac
 	case "$target_cpu" in
