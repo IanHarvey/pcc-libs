@@ -20,8 +20,7 @@ PCCLIBDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/lib
 PCCINCDIR = $(libdir)/pcc/$(TARGET)/$(VERSION)/include
 
 CPPFLAGS = @CPPFLAGS@ -I$(srcdir) @ENDIAN_FLAG@ -Dos_$(TARGOS) \
-	-Dmach_$(TARGMACH)
-CPPFLAGS = -isystem $(top_srcdir)/libpcc/include
+	-Dmach_$(TARGMACH) -isystem $(top_srcdir)/libpcc/include
 
 LIBS = @LIBS@
 AR = @AR@
